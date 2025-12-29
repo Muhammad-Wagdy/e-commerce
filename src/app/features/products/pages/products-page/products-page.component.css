@@ -1,0 +1,10 @@
+::ng-deep .ngx-pagination .current {
+  background-color: var(--color-main-600) !important;
+}
+::ng-deep .ngx-pagination a:hover{
+  background-color: transparent;
+
+}
+::ng-deep .ngx-pagination li{
+  border-radius: 50% !important;
+}

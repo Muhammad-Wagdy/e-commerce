@@ -1,0 +1,82 @@
+<div>
+  <div class="relative z-0 w-full mb-5 group">
+    <input
+      [name]="name"
+      [type]="type"
+      [disabled]="disabled"
+      [id]="id"
+      [attr.autoComplete]="autoComplete"
+      placeholder=""
+      (blur)="onTouched()"
+      (input)="value = $event.target.value; onChange(value)"
+      class="main-input peer"
+      [class.border-red-500]="
+        (control?.touched || control?.dirty) &&
+        (control?.invalid || group?.getError('passwordMissMatch'))
+      "
+    />
+    <label
+      [for]="id"
+      class="main-label"
+      [class.peer-focus:text-red-500]="
+        (control?.touched || control?.dirty) &&
+        (control?.invalid || group?.getError('passwordMissMatch'))
+      "
+    >
+      {{ label }}
+    </label>
+    @if(id.includes('UserPassword') || id.includes('rePassword')){
+    <button
+      type="button"
+      (click)="togglePasswordVisibility()"
+      class="absolute cursor-pointer right-3 top-1/2 transform -translate-y-1/2 text-gray-600"
+    >
+      <i [class]="!isPasswordVisible ? 'fas fa-eye' : 'fas fa-eye-slash'"></i>
+    </button>
+    }
+  </div>
+  @if ((control?.touched || control?.dirty) && control?.errors || group?.errors) {
+  <div
+    class="flex p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft border border-danger-subtle"
+    role="alert"
+    [class.touched]="control?.touched"
+  >
+    <svg-icon src="/images/validation/validation-error.svg" class="w-7"></svg-icon>
+    <div>
+      <span class="font-medium">Ensure that these requirements are met:</span>
+      <ul class="mt-2 list-disc space-y-1 ps-2.5">
+        @if (control?.hasError('required')) {
+        <li>Required</li>
+        } @if (control?.hasError('email')) {
+        <li>Enter a valid email</li>
+        } @if (control?.hasError('minlength')) {
+        <li>At least 3 characters</li>
+        } @if (control?.hasError('maxlength')) {
+        <li>Maximum 20 characters</li>
+        } @if (control?.hasError('pattern')) { @for (constraint of passwordConstrains; track
+        constraint.message) {
+        <li
+          class="flex items-center gap-2"
+          [class.text-green-600]="constraint.check"
+          [class.text-red-600]="!constraint.check"
+        >
+          @if (constraint.check) {
+          <span>✔</span>
+          } @else {
+          <span>•</span>
+          }
+
+          <span [class.line-through]="constraint.check">
+            {{ constraint.message }}
+          </span>
+        </li>
+        } } @if (control?.hasError('pattern') && type === 'tel') {
+        <li>Accepts only Egyptian numbers</li>
+        } @if (group?.getError('passwordMissMatch')) {
+        <li>Password doesn't match</li>
+        }
+      </ul>
+    </div>
+  </div>
+  }
+</div>

@@ -1,0 +1,62 @@
+<div class="w-full lg:w-auto">
+  <div class="mb-10 text-center lg:text-left">
+    <h3 class="text-3xl font-bold">Login to your account</h3>
+  </div>
+  <form [formGroup]="loginForm" class="max-w-md mx-auto">
+    <!-- Email -->
+    <app-auth-input
+      formControlName="email"
+      [control]="loginForm.get('email')"
+      [type]="'email'"
+      [id]="'UserEmail'"
+      [name]="'UserEmail'"
+      [label]="'User Email'"
+    ></app-auth-input>
+
+    <!-- Password -->
+    <app-auth-input
+      formControlName="password"
+      [control]="loginForm.get('password')"
+      [type]="isPasswordVisible ? 'text' : 'password'"
+      [id]="'UserPassword'"
+      [name]="'UserPassword'"
+      [label]="'User Password'"
+    ></app-auth-input>
+    <!-- forget password -->
+    <p class="text-md my-4 text-right">
+      <a routerLink="/forget-password" class="text-main-500 font-bold hover:underline">
+        Forget password?
+      </a>
+    </p>
+    <!-- Submit Button -->
+    <button [disabled]="isLoading" type="submit" (click)="submitData()" class="btn-main w-full">
+      Login @if (isLoading) { <i class="fas fa-spinner fa-spin"></i>}
+    </button>
+    <div class="mt-4">
+      @if (errorMessage) {
+      <div>
+        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4" role="alert">
+          <p class="font-bold"></p>
+          <p>
+            {{ errorMessage }}
+          </p>
+        </div>
+      </div>
+      }@if (successMessage) {
+      <div>
+        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4" role="alert">
+          <p class="font-bold"></p>
+          <p class="font-bold">{{ successMessage }}</p>
+          <p>you will be redirected in {{ redirectCounter }} seconds....</p>
+        </div>
+      </div>
+      }
+    </div>
+
+    <!-- Login Link -->
+    <p class="text-md mt-4">
+      Don't have an account?
+      <a routerLink="/register" class="text-main-500 font-bold hover:underline"> Register</a>
+    </p>
+  </form>
+</div>

@@ -1,0 +1,33 @@
+body {
+  background-image: url(/images/light-patten.svg);
+}
+
+@layer components {
+  .btn-main,
+  .active-link {
+    @apply bg-main-600 hover:bg-main-400 cursor-pointer duration-500 transition-colors disabled:cursor-not-allowed disabled:bg-light disabled:text-black px-5 py-2 rounded-2xl text-light;
+  }
+}
+
+@layer components {
+  .main-input {
+    @apply block font-medium py-2.5 px-0 w-full text-sm text-heading bg-transparent border-0 border-b-2 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-main-500;
+  }
+}
+@layer components {
+  .main-label {
+    @apply absolute text-sm text-body duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-left peer-focus:start-0 peer-focus:text-main-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto;
+  }
+}
+
+@layer components {
+  .btn-red {
+    @apply bg-red-700 hover:bg-red-600 cursor-pointer duration-500 transition-colors disabled:cursor-not-allowed disabled:bg-light disabled:text-black px-5 py-2 rounded-2xl text-light;
+  }
+}
+
+@layer components {
+  .main-card-hover {
+    @apply border-2 rounded-lg border-transparent hover:shadow-main hover:border-main-400 duration-300;
+  }
+}

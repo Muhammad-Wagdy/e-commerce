@@ -1,0 +1,29 @@
+.star {
+  position: relative;
+}
+
+.star-fill {
+  overflow: hidden;
+  width: 100%;
+  clip-path: inset(0 100% 0 0);
+}
+
+.star:nth-child(1) .star-fill {
+  clip-path: inset(0 calc(100% - var(--rating1, 0%)) 0 0);
+}
+
+.star:nth-child(2) .star-fill {
+  clip-path: inset(0 calc(100% - var(--rating2, 0%)) 0 0);
+}
+
+.star:nth-child(3) .star-fill {
+  clip-path: inset(0 calc(100% - var(--rating3, 0%)) 0 0);
+}
+
+.star:nth-child(4) .star-fill {
+  clip-path: inset(0 calc(100% - var(--rating4, 0%)) 0 0);
+}
+
+.star:nth-child(5) .star-fill {
+  clip-path: inset(0 calc(100% - var(--rating5, 0%)) 0 0);
+}
