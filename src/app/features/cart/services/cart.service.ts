@@ -20,8 +20,10 @@ export class CartService extends BaseHTTP {
       })
       .subscribe({
         next: (response) => {
-          console.log(response);
           this.userCart = response.data;
+        },
+        error: (error) => {
+          console.error('Error fetching cart:', error);
         },
       });
   }

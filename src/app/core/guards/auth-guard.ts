@@ -15,8 +15,17 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   const token = localStorage.getItem(STORED_KEYS.USER_TOKEN);
 
-  if (!token || !authService.isTokenValid(token)) {
+  // Check if token exists and is not empty
+  if (!token || token.trim() === '') {
     return router.parseUrl('/login');
   }
+
+  // Validate token
+  if (!authService.isTokenValid(token)) {
+    // Clear invalid token
+    authService.clearAuthData();
+    return router.parseUrl('/login');
+  }
+  
   return true;
 };

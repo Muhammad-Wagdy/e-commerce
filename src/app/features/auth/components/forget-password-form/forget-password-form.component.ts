@@ -1,12 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { AuthInputComponent } from '../auth-input/auth-input.component';
 
 @Component({
   selector: 'app-forget-password-form',
   standalone: true,
-  imports: [ReactiveFormsModule, AuthInputComponent],
+  imports: [ReactiveFormsModule, AuthInputComponent, RouterLink],
   templateUrl: './forget-password-form.component.html',
   styleUrl: './forget-password-form.component.css',
 })
@@ -28,7 +29,7 @@ export class ForgetPasswordFormComponent {
 
   initForgetPasswordForm(): void {
     this.forgetPasswordForm = this.fb.group({
-      email: ['', Validators.required, Validators.email],
+      email: ['', [Validators.required, Validators.email]],
     });
   }
 

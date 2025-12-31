@@ -19,7 +19,7 @@ export interface Brand {
   image: string;
 }
 
-export interface Product {
+export interface CartProduct {
   subcategory: Subcategory[];
   _id: string;
   title: string;
@@ -31,17 +31,17 @@ export interface Product {
   id: string;
 }
 
-export interface Product {
+export interface CartItem {
   count: number;
   _id: string;
-  product: Product;
+  product: CartProduct;
   price: number;
 }
 
 export interface CartData {
   _id: string;
   cartOwner: string;
-  products: Product[];
+  products: CartItem[];
   createdAt: string;
   updatedAt: string;
   __v: number;

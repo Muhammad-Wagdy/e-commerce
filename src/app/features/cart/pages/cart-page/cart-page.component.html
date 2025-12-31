@@ -1,98 +1,204 @@
-<section class="bg-gray-50 py-10">
-  <div class="mx-auto max-w-7xl px-4">
-    <!-- Header -->
-    <h1 class="text-2xl font-bold text-gray-900">Shopping Cart</h1>
-    <p class="mt-1 text-sm text-gray-500">Review your items before checkout</p>
+<section class="bg-white py-8 antialiased md:py-16">
+  <div class="mx-auto max-w-7xl px-4 2xl:px-0">
+    <h2 class="text-xl font-semibold text-gray-900 sm:text-2xl">
+      Shopping Cart
+    </h2>
 
-    <div class="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-3">
-      <!-- Cart Items -->
-      <div class="lg:col-span-2 space-y-6">
-        <!-- Item -->
-        <div
-          class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition hover:shadow-md"
-        >
-          <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
-            <!-- Image -->
-            <img
-              src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/apple-watch-dark.svg"
-              alt="Product"
-              class="h-24 w-24 rounded-lg object-contain bg-gray-100"
-            />
+    @if (!cartServices.userCart) {
+      <app-loading-spinner></app-loading-spinner>
+    }@else{
+        <div class="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
+        <div class="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
+          <div class="space-y-6">
+            @for ( cartItem of cartServices.userCart.products; track $index) {
+              <div
+                class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm md:p-6"
+              >
+                <div
+                  class="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0"
+                >
+                  <a href="#" class="shrink-0 md:order-1">
+                    <img
+                      class="h-20 w-20 block"
+                      [src]="cartItem.product.imageCover"
+                      [alt]="cartItem.product.title"
+                    />
+                  </a>
 
-            <!-- Info -->
-            <div class="flex-1">
-              <h3 class="text-base font-semibold text-gray-900">Apple iMac 24” M3 – Retina 4.5K</h3>
-              <p class="mt-1 text-sm text-gray-500">8GB RAM · 256GB SSD · 10-core GPU</p>
+                  <label for="counter-input" class="sr-only"
+                    >Choose quantity:</label
+                  >
+                  <div
+                    class="flex items-center justify-between md:order-3 md:justify-end"
+                  >
+                    <div class="flex items-center">
+                      <button
+                        type="button"
+                        class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100"
+                      >
+                        <svg
+                          class="h-2.5 w-2.5 text-gray-900"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 18 2"
+                        >
+                          <path
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M1 1h16"
+                          />
+                        </svg>
+                      </button>
+                      <input
+                        type="text"
+                        class="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0"
+                        placeholder=""
+                        value="2"
+                      />
+                      <button
+                        type="button"
+                        class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100"
+                      >
+                        <svg
+                          class="h-2.5 w-2.5 text-gray-900"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 18 18"
+                        >
+                          <path
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M9 1v16M1 9h16"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                    <div class="text-end md:order-4 md:w-32">
+                      <p class="text-base font-bold text-gray-900">{{cartItem.price | currency : ' EGP '}}</p>
+                    </div>
+                  </div>
 
-              <div class="mt-3 flex flex-wrap items-center gap-4 text-sm">
-                <button class="text-gray-500 hover:text-gray-900 hover:underline">
-                  Add to favorites
-                </button>
-                <button class="text-red-600 hover:underline">Remove</button>
+                  <div
+                    class="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md"
+                  >
+                    <a
+                      [routerLink]="['/details',cartItem._id]"
+                      class="text-base font-medium text-gray-900 hover:underline"
+                      >{{cartItem.product.title}}</a
+                    >
+
+                    <div class="flex items-center gap-4">
+                      <button
+                        type="button"
+                        class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 hover:underline"
+                      >
+                        <svg
+                          class="me-1.5 h-5 w-5"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z"
+                          />
+                        </svg>
+                        Add to Favorites
+                      </button>
+
+                      <button
+                        type="button"
+                        class="inline-flex items-center text-sm font-medium text-red-600 hover:underline"
+                      >
+                        <svg
+                          class="me-1.5 h-5 w-5"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M6 18 17.94 6M18 18 6.06 6"
+                          />
+                        </svg>
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
+            }
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="mx-auto sticky top-24 mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full">
+          <div
+            class="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm sm:p-6"
+          >
+            <p class="text-xl font-semibold text-gray-900">Order summary</p>
+
+            <div class="space-y-4">
+              <div class="space-y-2">
+                <dl class="flex items-center justify-between gap-4">
+                  <dt class="text-base font-normal text-gray-500">
+                    Original price
+                  </dt>
+                  <dd class="text-base font-medium text-gray-900">$7,592.00</dd>
+                </dl>
+
+                <dl class="flex items-center justify-between gap-4">
+                  <dt class="text-base font-normal text-gray-500">Savings</dt>
+                  <dd class="text-base font-medium text-green-600">-$299.00</dd>
+                </dl>
+
+                <dl class="flex items-center justify-between gap-4">
+                  <dt class="text-base font-normal text-gray-500">
+                    Store Pickup
+                  </dt>
+                  <dd class="text-base font-medium text-gray-900">$99</dd>
+                </dl>
+
+                <dl class="flex items-center justify-between gap-4">
+                  <dt class="text-base font-normal text-gray-500">Tax</dt>
+                  <dd class="text-base font-medium text-gray-900">$799</dd>
+                </dl>
+              </div>
+
+              <dl
+                class="flex items-center justify-between gap-4 border-t border-gray-200 pt-2"
+              >
+                <dt class="text-base font-bold text-gray-900">Total</dt>
+                <dd class="text-base font-bold text-gray-900">{{cartServices.userCart.totalCartPrice | currency : ' EGP '}}</dd>
+              </dl>
             </div>
 
-            <!-- Qty + Price -->
-            <div class="flex items-center justify-between sm:flex-col sm:items-end sm:gap-3">
-              <!-- Quantity -->
-              <div class="flex items-center rounded-lg border border-gray-300">
-                <button class="px-2 py-1 text-gray-600 hover:bg-gray-100">−</button>
-                <input
-                  type="text"
-                  value="2"
-                  class="w-10 border-0 text-center text-sm focus:ring-0"
-                />
-                <button class="px-2 py-1 text-gray-600 hover:bg-gray-100">+</button>
-              </div>
-
-              <!-- Price -->
-              <p class="text-lg font-bold text-gray-900">$1,499</p>
-            </div>
+            <a
+              href="#"
+              class="flex bg-main-500 w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300"
+              >Proceed to Checkout</a
+            >
           </div>
         </div>
       </div>
-
-      <!-- Order Summary -->
-      <aside class="lg:sticky lg:top-6">
-        <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-          <h2 class="text-lg font-semibold text-gray-900">Order Summary</h2>
-
-          <dl class="mt-6 space-y-4 text-sm">
-            <div class="flex justify-between">
-              <dt class="text-gray-500">Subtotal</dt>
-              <dd class="font-medium">$7,592.00</dd>
-            </div>
-
-            <div class="flex justify-between">
-              <dt class="text-gray-500">Savings</dt>
-              <dd class="font-medium text-green-600">−$299.00</dd>
-            </div>
-
-            <div class="flex justify-between">
-              <dt class="text-gray-500">Shipping</dt>
-              <dd class="font-medium">$99.00</dd>
-            </div>
-
-            <div class="flex justify-between">
-              <dt class="text-gray-500">Tax</dt>
-              <dd class="font-medium">$799.00</dd>
-            </div>
-
-            <div class="flex justify-between border-t pt-4 text-base">
-              <dt class="font-semibold">Total</dt>
-              <dd class="font-bold">$8,191.00</dd>
-            </div>
-          </dl>
-
-          <button
-            class="mt-6 w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-300"
-          >
-            Proceed to Checkout
-          </button>
-
-          <p class="mt-4 text-center text-xs text-gray-500">Secure checkout · Free returns</p>
-        </div>
-      </aside>
-    </div>
+      }
   </div>
 </section>

@@ -4,13 +4,12 @@ import {
   ControlValueAccessor,
   FormGroup,
   NG_VALUE_ACCESSOR,
-  ɵInternalFormsSharedModule,
 } from '@angular/forms';
 import { SvgIconComponent } from 'angular-svg-icon';
 
 @Component({
   selector: 'app-auth-input',
-  imports: [SvgIconComponent, ɵInternalFormsSharedModule],
+  imports: [SvgIconComponent,],
   templateUrl: './auth-input.component.html',
   styleUrl: './auth-input.component.css',
   providers: [
@@ -22,7 +21,7 @@ import { SvgIconComponent } from 'angular-svg-icon';
   ],
 })
 export class AuthInputComponent implements ControlValueAccessor {
-  @Input() control: AbstractControl<String> | null = null;
+  @Input() control: AbstractControl<string> | null = null;
   @Input() group: FormGroup | null = null;
   @Input() type: string = '';
   @Input() id: string = '';
@@ -57,11 +56,8 @@ export class AuthInputComponent implements ControlValueAccessor {
     this.type = this.isPasswordVisible ? 'text' : 'password';
   }
 
-  // Inside AuthInputComponent class
 
-  // Ensure this matches the property you're updating in (input)
   get passwordConstrains() {
-    // Only return constraints if this is the primary password field
     if (this.id !== 'UserPassword') return [];
 
     return [

@@ -10,9 +10,12 @@ export class BrandsService extends BaseHTTP {
   allBrands!: Brand[];
 
   getAllBrands(): void {
-    this.http.get<IAllBrandsResponse>(APP_APIS.Brands.allBrands).subscribe({
+    this.http.get<IAllBrandsResponse>(APP_APIS.BRANDS.allBrands).subscribe({
       next: (response) => {
         this.allBrands = response.data;
+      },
+      error: (error) => {
+        console.error('Error fetching brands:', error);
       },
     });
   }

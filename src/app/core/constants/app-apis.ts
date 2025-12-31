@@ -7,12 +7,13 @@ export const APP_APIS = {
   CATEGORIES: {
     allCategories: `${environment.baseUrl}categories`,
   },
-  Brands: {
+  BRANDS: {
     allBrands: `${environment.baseUrl}brands`,
   },
   Auth: {
     signUp: `${environment.baseUrl}auth/signup`,
     login: `${environment.baseUrl}auth/signin`,
+    forgetPassword: `${environment.baseUrl}auth/forgotPasswords`,
   },
   Cart: {
     data: `${environment.baseUrl}cart`,

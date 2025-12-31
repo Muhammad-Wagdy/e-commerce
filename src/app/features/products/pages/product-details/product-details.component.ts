@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../services/products.service';
 import { LoadingSpinnerComponent } from "../../../../shared/components/loading-spinner/loading-spinner.component";

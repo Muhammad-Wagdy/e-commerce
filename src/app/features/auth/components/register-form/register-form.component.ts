@@ -81,8 +81,6 @@ export class RegisterFormComponent {
                 this.router.navigateByUrl('/login');
               }
             });
-          console.log(response);
-          console.log(this.registerForm);
         },
         error: (error: HttpErrorResponse) => {
           this.isLoading = false;

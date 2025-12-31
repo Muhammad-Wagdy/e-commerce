@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ProductsService } from '../../services/products.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ViewportScroller } from '@angular/common';
@@ -12,7 +12,7 @@ import { CardProductsComponent } from "../card-products/card-products.component"
   templateUrl: './related-products.component.html',
   styleUrl: './related-products.component.css',
 })
-export class RelatedProductsComponent {
+export class RelatedProductsComponent implements OnInit {
   public readonly productsService = inject(ProductsService);
   public readonly router = inject(Router)
   public readonly activatedRoute = inject(ActivatedRoute)
