@@ -7,6 +7,12 @@
     @if (!cartServices.userCart) {
       <app-loading-spinner></app-loading-spinner>
     }@else{
+      @if (!cartServices.userCart.products.length) {
+        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4" role="alert">
+          <p class="font-bold">No products added yet</p>
+          <p></p>
+        </div>
+      }@else {
         <div class="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
         <div class="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
           <div class="space-y-6">
@@ -199,6 +205,7 @@
           </div>
         </div>
       </div>
+      }
       }
   </div>
 </section>

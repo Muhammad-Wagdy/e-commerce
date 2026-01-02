@@ -78,7 +78,7 @@ export class RegisterFormComponent {
             .subscribe(() => {
               --this.redirectCounter;
               if (this.redirectCounter === 0) {
-                this.router.navigateByUrl('/login');
+                this.router.navigateByUrl('/auth/login');
               }
             });
         },

@@ -1,46 +1,49 @@
+// app.routes.ts
 import { Routes } from '@angular/router';
-import { AuthLayoutComponent } from './core/layouts/auth-layout/auth-layout.component';
-import { MainLayoutComponent } from './core/layouts/main-layout/main-layout.component';
-import { AUTH_ROUTES } from './features/auth/auth.routes';
-import { BRANDS_ROUTES } from './features/brands/brands.routes';
-import { CATEGORIES_ROUTES } from './features/categories/categories.routes';
-import { HOME_ROUTES } from './features/home/home.routes';
-import { PRODUCTS_ROUTES } from './features/products/products.routes';
 import { authGuard } from './core/guards/auth-guard';
 import { loggedUserGuard } from './core/guards/logged-user-guard';
-import { CART_ROUTES } from './features/cart/cart.routes';
 
 export const routes: Routes = [
-  //Auth - only for logged out users
+  // Root redirect
   {
     path: '',
-    canActivate: [loggedUserGuard],
-    component: AuthLayoutComponent,
-    children: AUTH_ROUTES,
+    pathMatch: 'full',
+    redirectTo: 'home',
   },
-  //User - only for logged in users
+
+  // Auth - only for logged out users
+  {
+    path: 'auth',
+    canActivate: [loggedUserGuard],
+    loadComponent: () =>
+      import('./core/layouts/auth-layout/auth-layout.component').then(
+        (m) => m.AuthLayoutComponent
+      ),
+    loadChildren: () =>
+      import('./features/auth/auth.routes').then((m) => m.AUTH_ROUTES),
+  },
+
+  // User - only for logged in users
   {
     path: '',
     canActivate: [authGuard],
-    component: MainLayoutComponent,
+    loadComponent: () =>
+      import('./core/layouts/main-layout/main-layout.component').then(
+        (m) => m.MainLayoutComponent
+      ),
     children: [
       {
         path: 'home',
-        children: HOME_ROUTES,
+        loadChildren: () =>
+          import('./features/home/home.routes').then((m) => m.HOME_ROUTES),
       },
       {
         path: 'products',
-        children: PRODUCTS_ROUTES,
+        loadChildren: () =>
+          import('./features/products/products.routes').then((m) => m.PRODUCTS_ROUTES),
       },
       {
-        path: 'details/:id',
-        loadComponent: () =>
-          import('./features/products/pages/product-details/product-details.component').then(
-            (m) => m.ProductDetailsComponent
-          ),
-      },
-      {
-        path: 'details/:id/:slug',
+        path: 'details/:id/:slug?',
         loadComponent: () =>
           import('./features/products/pages/product-details/product-details.component').then(
             (m) => m.ProductDetailsComponent
@@ -48,19 +51,23 @@ export const routes: Routes = [
       },
       {
         path: 'categories',
-        children: CATEGORIES_ROUTES,
+        loadChildren: () =>
+          import('./features/categories/categories.routes').then((m) => m.CATEGORIES_ROUTES),
       },
       {
         path: 'brands',
-        children: BRANDS_ROUTES,
+        loadChildren: () =>
+          import('./features/brands/brands.routes').then((m) => m.BRANDS_ROUTES),
       },
       {
         path: 'cart',
-        children: CART_ROUTES,
+        loadChildren: () =>
+          import('./features/cart/cart.routes').then((m) => m.CART_ROUTES),
       },
     ],
   },
-  //not-found
+
+  // not-found
   {
     path: 'not-found',
     loadComponent: () =>

@@ -17,15 +17,15 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   // Check if token exists and is not empty
   if (!token || token.trim() === '') {
-    return router.parseUrl('/login');
+    return router.parseUrl('/auth/login');
   }
 
   // Validate token
   if (!authService.isTokenValid(token)) {
     // Clear invalid token
     authService.clearAuthData();
-    return router.parseUrl('/login');
+    return router.parseUrl('/auth/login');
   }
-  
+
   return true;
 };

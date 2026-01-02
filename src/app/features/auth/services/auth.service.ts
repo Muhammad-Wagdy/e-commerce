@@ -51,7 +51,7 @@ export class AuthService extends BaseHTTP {
 
   logOut() {
     this.clearAuthData();
-    this.router.navigate(['/login']);
+    this.router.navigateByUrl('/auth/login');
   }
   forgetPassword(data: { email: string }) {
     return this.http.post(APP_APIS.Auth.forgetPassword, data);
@@ -65,8 +65,7 @@ export class AuthService extends BaseHTTP {
       }
 
       const decoded = jwtDecode(token) as { id: string; exp?: number; email: string };
-
-      if (!decoded?.id || !decoded?.email) {
+      if (!decoded?.id) {
         return false;
       }
 
@@ -78,13 +77,13 @@ export class AuthService extends BaseHTTP {
       }
 
       localStorage.setItem(STORED_KEYS.USER_ID, decoded.id);
+      localStorage.setItem(STORED_KEYS.USER_TOKEN,token);
       this.storedToken = token;
       return true;
     } catch (error) {
       return false;
     }
   }
-
   setToken(token: string) {
     this.storedToken = token;
   }
@@ -98,7 +97,7 @@ export class AuthService extends BaseHTTP {
     if (!this.storedToken) {
       return this.decodeToken(token);
     }
-    
+
     // If token changed, decode and validate the new token
     if (token !== this.storedToken) {
       return this.decodeToken(token);

@@ -14,7 +14,7 @@ export const loggedUserGuard: CanActivateFn = (route, state) => {
   }
 
   const token = localStorage.getItem(STORED_KEYS.USER_TOKEN);
-  
+
   // Check if token exists and is not empty
   if (!token || token.trim() === '') {
     return true; // Allow access to auth pages
@@ -24,7 +24,8 @@ export const loggedUserGuard: CanActivateFn = (route, state) => {
   if (authService.isTokenValid(token)) {
     return router.parseUrl('/home');
   }
-  
+
+
   // Token exists but is invalid - clear it and allow access to auth pages
   authService.clearAuthData();
   return true;
