@@ -20,7 +20,13 @@
       </div>
       <p class="leading-relaxed mb-3 line-clamp-2">{{ product.description }}</p>
       <div class="flex items-center justify-between">
-        <button class="btn-main text-center">Add to cart</button>
+        <button [disabled]="isLoading" (click)="addToCart(product._id)" class="btn-main text-center w-3/4">
+          @if(isLoading){
+            Adding... <i class="fas fa-spinner fa-spin mx-2 "></i>
+          }@else{
+            Add to cart
+          }
+        </button>
         <span class="text-black font-extrabold text-lg inline-flex items-center leading-none">
           {{ product.price }} $
         </span>

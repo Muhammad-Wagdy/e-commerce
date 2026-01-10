@@ -18,4 +18,11 @@ export const APP_APIS = {
   Cart: {
     data: `${environment.baseUrl}cart`,
   },
+  ORDERS: {
+    orders: `${environment.baseUrl}orders/user`,
+  },
+  PAYMENT: {
+    cash: `${environment.baseUrl}orders`,
+    online: `${environment.baseUrl}orders/checkout-session`,
+  },
 };

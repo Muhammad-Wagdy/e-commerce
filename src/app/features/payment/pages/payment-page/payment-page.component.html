@@ -1,0 +1,185 @@
+<div
+  class="bg-linear-to-br from-green-50 via-emerald-50 to-teal-50 min-h-screen flex items-center justify-center p-4"
+>
+  <div class="w-full max-w-md">
+    <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-green-100">
+      <div
+        class="bg-linear-to-br from-green-500 via-emerald-500 to-teal-500 p-8 text-center relative overflow-hidden"
+      >
+        <div
+          class="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full -mr-16 -mt-16"
+        ></div>
+        <div
+          class="absolute bottom-0 left-0 w-24 h-24 bg-white opacity-10 rounded-full -ml-12 -mb-12"
+        ></div>
+
+        <div class="relative z-10">
+          <div class="inline-block bg-white rounded-2xl p-4 mb-4 shadow-lg">
+            <img src="/images/freshcart-logo.svg" alt="" />
+          </div>
+        </div>
+      </div>
+
+      <div class="p-8">
+        <div class="rounded-2xl p-5 mb-6 border-2 border-gray-200">
+          <div class="flex items-center gap-2 mb-4">
+            <i class="fas fa-receipt text-gray-600"></i>
+            <h3 class="font-semibold text-gray-800">Order Summary</h3>
+          </div>
+          <div class="space-y-2 mb-3">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-600 text-sm">ProductsPrice</span>
+              <span class="font-semibold text-gray-800">{{priceWithTaxes | currency : 'EGP'}}</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-600 text-sm">Delivery Fee</span>
+              <span class="font-semibold text-gray-800">{{deliveryFee | currency : 'EGP'}}</span>
+            </div>
+          </div>
+          <div class="border-t-2 border-green-300 my-3"></div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-800 font-semibold text-lg">Total</span>
+            <span class="text-3xl font-bold text-green-600">{{totalPrice | currency : 'EGP'}}</span>
+          </div>
+        </div>
+
+        <form [formGroup]="userPaymentForm" (ngSubmit)="sendUserPaymentInfo()">
+          <div class="mb-6">
+            <label class="block text-sm font-semibold mb-2">
+              <i class="fas fa-user mr-2"></i>Details
+            </label>
+            <input
+              formControlName="details"
+              type="text"
+              placeholder="Details"
+              class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-green-500 focus:ring-4 focus:ring-green-100 outline-none transition-all duration-200"
+              [class.border-red-500]="(userPaymentForm.get('details')?.invalid && userPaymentForm.get('details')?.touched) || (userPaymentForm.get('details')?.invalid && submitted)"
+            />
+            @if ((userPaymentForm.get('details')?.invalid && userPaymentForm.get('details')?.touched) || (userPaymentForm.get('details')?.invalid && submitted)) {
+              <span class="text-red-500 text-xs mt-1 block">
+                Details are required
+              </span>
+            }
+          </div>
+
+          <div class="mb-6">
+            <label class="block text-sm font-semibold mb-2">
+              <i class="fas fa-phone mr-2"></i>Phone
+            </label>
+            <input
+              formControlName="phone"
+              type="tel"
+              placeholder="Enter your Phone Number"
+              class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-green-500 focus:ring-4 focus:ring-green-100 outline-none transition-all duration-200"
+              [class.border-red-500]="(userPaymentForm.get('phone')?.invalid && userPaymentForm.get('phone')?.touched) || (userPaymentForm.get('phone')?.invalid && submitted)"
+            />
+            @if ((userPaymentForm.get('phone')?.invalid && userPaymentForm.get('phone')?.touched) || (userPaymentForm.get('phone')?.invalid && submitted)) {
+              <span class="text-red-500 text-xs mt-1 block">
+                Phone number is required
+              </span>
+            }
+          </div>
+
+          <div class="mb-6">
+            <label class="block text-sm font-semibold mb-2">
+              <i class="fas fa-map-marker-alt mr-2"></i>Delivery Address
+            </label>
+            <input
+              formControlName="city"
+              type="text"
+              placeholder="Enter your delivery address"
+              class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-green-500 focus:ring-4 focus:ring-green-100 outline-none transition-all duration-200"
+              [class.border-red-500]="userPaymentForm.get('city')?.invalid && userPaymentForm.get('city')?.touched"
+            />
+            @if (userPaymentForm.get('city')?.invalid && userPaymentForm.get('city')?.touched) {
+              <span class="text-red-500 text-xs mt-1 block">
+                Delivery address is required
+              </span>
+            }
+          </div>
+
+          <div class="mb-4">
+            <h3 class="text-sm font-semibold mb-3">
+              <i class="fas fa-credit-card mr-2"></i>Select Payment Method
+            </h3>
+          </div>
+
+          <div class="space-y-3 mb-6">
+            <!-- Online Payment Button -->
+            <button
+              type="button"
+              (click)="selectedMethod='online'"
+              [class]="selectedMethod === 'online'
+                ? 'border-2 border-green-500 bg-linear-to-r from-green-500 to-emerald-600 text-white'
+                : 'border-2 border-gray-200 bg-white'"
+              class="w-full cursor-pointer rounded-xl p-4 flex items-center justify-between transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+            >
+              <div class="flex items-center gap-3">
+                <div
+                  [class]="selectedMethod === 'online' ? 'bg-white' : 'bg-green-50'"
+                  class="w-12 h-12 rounded-lg flex items-center justify-center shadow-sm"
+                >
+                  <i class="fas fa-credit-card text-2xl text-green-600"></i>
+                </div>
+                <div class="text-left">
+                  <p [class]="selectedMethod === 'online' ? 'text-white' : 'text-gray-800'" class="font-semibold">
+                    Card Payment
+                  </p>
+                  <p [class]="selectedMethod === 'online' ? 'text-white opacity-90' : 'text-gray-600'" class="text-sm">
+                    Visa, Mastercard, etc.
+                  </p>
+                </div>
+              </div>
+              <i
+                [class]="selectedMethod === 'online' ? 'text-white' : 'text-gray-300'"
+                class="fas fa-check-circle text-2xl"
+              ></i>
+            </button>
+
+            <!-- Cash Payment Button -->
+            <button
+              type="button"
+              (click)="selectedMethod = 'cash'"
+              [class]="selectedMethod === 'cash'
+                ? 'border-2 border-green-500 bg-linear-to-r from-green-500 to-emerald-600 text-white'
+                : 'border-2 border-gray-200 bg-white'"
+              class="w-full cursor-pointer rounded-xl p-4 flex items-center justify-between transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+            >
+              <div class="flex items-center gap-3">
+                <div
+                  [class]="selectedMethod === 'cash' ? 'bg-white' : 'bg-green-50'"
+                  class="w-12 h-12 rounded-lg flex items-center justify-center"
+                >
+                  <i class="fas fa-money-bill-wave text-2xl text-green-600"></i>
+                </div>
+                <div class="text-left">
+                  <p [class]="selectedMethod === 'cash' ? 'text-white' : 'text-gray-800'" class="font-semibold">
+                    Cash on Delivery
+                  </p>
+                  <p [class]="selectedMethod === 'cash' ? 'text-white opacity-90' : 'text-gray-600'" class="text-sm">
+                    Pay when you receive
+                  </p>
+                </div>
+              </div>
+              <i
+                [class]="selectedMethod === 'cash' ? 'text-white' : 'text-gray-300'"
+                class="fas fa-check-circle text-2xl"
+              ></i>
+            </button>
+          </div>
+
+          <button
+            type="submit"
+            class="cursor-pointer w-full bg-linear-to-r from-green-500 to-emerald-600 text-white font-semibold py-4 rounded-xl shadow-lg hover:shadow-xl hover:from-green-600 hover:to-emerald-700 transition-all duration-300 flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed"
+            [disabled]="userPaymentForm.invalid"
+          >
+            <span>Complete Order</span>
+            <i
+              class="fas fa-arrow-right group-hover:translate-x-1 transition-transform duration-300"
+            ></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

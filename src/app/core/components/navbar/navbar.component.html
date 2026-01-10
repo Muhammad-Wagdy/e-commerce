@@ -44,8 +44,11 @@
           </a>
         </li>
         <li>
-          <a routerLink="/cart" routerLinkActive="active-link" class="block py-2 px-3 capitalize">
-            cart
+          <a routerLink="/cart" routerLinkActive="active-link" class="block py-2 px-3 capitalize relative">
+            <i class="fas fa-cart-shopping"></i>
+            @if (cartService.numOfCartItems | async) {
+              <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-danger border-2 border-buffer rounded-full -top-2 -end-2">{{cartService.numOfCartItems | async}}</div>
+            }
           </a>
         </li>
         <li>

@@ -5,14 +5,12 @@ import { IAuthResponse } from '../interfaces/IAuthResponse';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { STORED_KEYS } from '../../../core/constants/StoredKeys';
-import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService extends BaseHTTP {
   private readonly router = inject(Router);
-  private readonly platformId = inject(PLATFORM_ID);
   private storedToken: string | null = null;
 
   constructor() {
@@ -23,9 +21,8 @@ export class AuthService extends BaseHTTP {
 
   private initializeTokenFromStorage(): void {
     // Only access localStorage in browser environment
-    if (!isPlatformBrowser(this.platformId)) {
-      return;
-    }
+    if (!this.isBrowser) return;
+
 
     const token = localStorage.getItem(STORED_KEYS.USER_TOKEN);
     if (token && token.trim() !== '') {
@@ -44,6 +41,8 @@ export class AuthService extends BaseHTTP {
   }
 
   clearAuthData() {
+      if (!this.isBrowser) return;
+
     localStorage.removeItem(STORED_KEYS.USER_TOKEN);
     localStorage.removeItem(STORED_KEYS.USER_ID);
     this.storedToken = null;
@@ -51,7 +50,10 @@ export class AuthService extends BaseHTTP {
 
   logOut() {
     this.clearAuthData();
+  if (this.isBrowser) {
     this.router.navigateByUrl('/auth/login');
+  }
+
   }
   forgetPassword(data: { email: string }) {
     return this.http.post(APP_APIS.Auth.forgetPassword, data);

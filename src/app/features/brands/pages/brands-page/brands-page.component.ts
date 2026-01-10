@@ -1,11 +1,10 @@
 import { BrandsService } from './../../services/brands.service';
 import { Component, inject, OnInit } from '@angular/core';
 import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header.component';
-import { LoadingSpinnerComponent } from '../../../../shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-brands-page',
-  imports: [SectionHeaderComponent, LoadingSpinnerComponent],
+  imports: [SectionHeaderComponent],
   templateUrl: './brands-page.component.html',
   styleUrl: './brands-page.component.css',
 })

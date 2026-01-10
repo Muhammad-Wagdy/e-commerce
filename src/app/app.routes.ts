@@ -1,3 +1,4 @@
+import { PAYMENT_ROUTES } from './features/payment/payment.routes';
 // app.routes.ts
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth-guard';
@@ -50,6 +51,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'details/:id',
+        loadComponent: () =>
+          import('./features/products/pages/product-details/product-details.component').then(
+            (m) => m.ProductDetailsComponent
+          ),
+      },
+      {
         path: 'categories',
         loadChildren: () =>
           import('./features/categories/categories.routes').then((m) => m.CATEGORIES_ROUTES),
@@ -58,6 +66,16 @@ export const routes: Routes = [
         path: 'brands',
         loadChildren: () =>
           import('./features/brands/brands.routes').then((m) => m.BRANDS_ROUTES),
+      },
+      {
+        path: 'orders',
+        loadChildren: () =>
+          import('./features/orders/orders.routes').then((m) => m.ORDERS_ROUTES),
+      },
+      {
+        path: 'payment/:cartId',
+        loadChildren: () =>
+          import('./features/payment/payment.routes').then((m) => m.PAYMENT_ROUTES),
       },
       {
         path: 'cart',

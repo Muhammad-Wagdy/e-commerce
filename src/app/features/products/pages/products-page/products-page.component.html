@@ -3,7 +3,7 @@
   <!-- all products -->
   @if(!productsService.allProducts){
   <app-loading-spinner></app-loading-spinner>
-  }@else if (productsService.isFetching) {
+  }@else if (isFetching) {
     <ngx-skeleton-loader count="5" appearance="circle" />
   }@else {
   <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">

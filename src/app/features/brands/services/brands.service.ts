@@ -14,8 +14,7 @@ export class BrandsService extends BaseHTTP {
       next: (response) => {
         this.allBrands = response.data;
       },
-      error: (error) => {
-        console.error('Error fetching brands:', error);
+      error: () => {
       },
     });
   }

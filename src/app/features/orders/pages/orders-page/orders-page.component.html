@@ -1,0 +1,106 @@
+<div class="max-w-7xl mx-auto p-6 space-y-6">
+
+  @for (order of userOrders; track order._id) {
+    <div class="border rounded-lg shadow-sm bg-white">
+
+      <!-- Order Header -->
+      <div class="flex flex-wrap justify-between items-center p-4 border-b bg-gray-50">
+        <div>
+          <h2 class="text-lg font-semibold text-gray-800">
+            Order #{{ order.id }}
+          </h2>
+          <p class="text-sm text-gray-500">
+            {{ order.createdAt | date: 'medium' }}
+          </p>
+        </div>
+
+        <div class="flex gap-4 text-sm">
+          @if (order.isPaid) {
+            <span class="px-3 py-1 rounded-full bg-green-100 text-green-700">
+              Paid
+            </span>
+          } @else {
+            <span class="px-3 py-1 rounded-full bg-red-100 text-red-700">
+              Not Paid
+            </span>
+          }
+
+          @if (order.isDelivered) {
+            <span class="px-3 py-1 rounded-full bg-green-100 text-green-700">
+              Delivered
+            </span>
+          } @else {
+            <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700">
+              Pending Delivery
+            </span>
+          }
+        </div>
+      </div>
+
+      <!-- Order Info -->
+      <div class="grid md:grid-cols-3 gap-4 p-4 text-sm text-gray-700">
+        <div>
+          <p class="font-medium">Customer</p>
+          <p>{{ order.user.name }}</p>
+          <p class="text-gray-500">{{ order.user.email }}</p>
+          <p class="text-gray-500">{{ order.user.phone }}</p>
+        </div>
+
+        <div>
+          <p class="font-medium">Shipping Address</p>
+          <p>{{ order.shippingAddress.city }}</p>
+          <p>{{ order.shippingAddress.details }}</p>
+          <p class="text-gray-500">{{ order.shippingAddress.phone }}</p>
+        </div>
+
+        <div>
+          <p class="font-medium">Payment</p>
+          <p>Method: {{ order.paymentMethodType }}</p>
+          <p>
+            Total:
+            <span class="font-semibold">
+              {{ order.totalOrderPrice }} EGP
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Cart Items -->
+      <div class="border-t">
+        @for (item of order.cartItems; track item._id) {
+          <div class="flex items-center gap-4 p-4 border-b last:border-b-0">
+
+            <img
+              [src]="item.product.imageCover"
+              [alt]="item.product.title"
+              class="w-20 h-20 object-cover rounded"
+            />
+
+            <div class="flex-1">
+              <h3 class="font-medium text-gray-800">
+                {{ item.product.title }}
+              </h3>
+              <p class="text-sm text-gray-500">
+                Brand: {{ item.product.brand.name }}
+              </p>
+              <p class="text-sm text-gray-500">
+                Category: {{ item.product.category.name }}
+              </p>
+            </div>
+
+            <div class="text-right text-sm">
+              <p>Qty: {{ item.count }}</p>
+              <p class="font-semibold">{{ item.price }} EGP</p>
+            </div>
+          </div>
+        }
+      </div>
+
+    </div>
+  } @empty {
+    <div class="text-center text-gray-500 py-10">
+      No orders found.
+    </div>
+  }
+
+</div>

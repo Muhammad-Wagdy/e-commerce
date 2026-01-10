@@ -11,9 +11,16 @@ import { ProductsService } from '../../../products/services/products.service';
   styleUrl: './home-products.component.css',
 })
 export class HomeProductsComponent implements OnInit {
-  public readonly ProductsService = inject(ProductsService);
+  public readonly productsService = inject(ProductsService);
 
   ngOnInit(): void {
-    this.ProductsService.getAllProducts();
+    this.productsService.getAllProducts().subscribe({
+      next: (response) => {
+        this.productsService.allProducts = response.data;
+        this.productsService.totalProducts = response.results;
+      },
+      error: () => {
+      },
+    });;
   }
 }

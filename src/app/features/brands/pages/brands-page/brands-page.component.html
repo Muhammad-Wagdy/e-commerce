@@ -3,7 +3,10 @@
 
   <!-- all categories -->
   @if (!brandsService.allBrands) {
-  <app-loading-spinner></app-loading-spinner>
+          <div class="bg-gray-100 border-l-4 border-gray-500 text-gray-700 p-4" role="alert">
+          <p class="font-bold">Waiting....</p>
+          <p></p>
+        </div>
   }@else {
   <div class="grid md:grid-cols-3 lg:grid-cols-4">
     @for (brand of brandsService.allBrands; track $index) {
