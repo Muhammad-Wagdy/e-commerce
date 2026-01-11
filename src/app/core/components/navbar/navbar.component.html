@@ -44,12 +44,22 @@
           </a>
         </li>
         <li>
-          <a routerLink="/cart" routerLinkActive="active-link" class="block py-2 px-3 capitalize relative">
-            <i class="fas fa-cart-shopping"></i>
-            @if (cartService.numOfCartItems | async) {
-              <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-danger border-2 border-buffer rounded-full -top-2 -end-2">{{cartService.numOfCartItems | async}}</div>
+          <button
+            (click)="openCart()"
+            type="button"
+            class="relative p-2 cursor-pointer text-gray-700 hover:text-gray-900 transition-colors"
+            aria-label="Shopping cart"
+          >
+            <i class="fas fa-shopping-cart text-xl"></i>
+
+            @if ((cartService.numOfCartItems | async)! > 0) {
+            <span
+              class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center"
+            >
+              {{ cartService.numOfCartItems | async }}
+            </span>
             }
-          </a>
+          </button>
         </li>
         <li>
           <a
@@ -91,7 +101,11 @@
         </li>
         }@else {
         <li>
-          <a routerLink="/auth/login" routerLinkActive="active-link" class="block py-2 px-3 capitalize">
+          <a
+            routerLink="/auth/login"
+            routerLinkActive="active-link"
+            class="block py-2 px-3 capitalize"
+          >
             login
           </a>
         </li>

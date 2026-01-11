@@ -77,11 +77,6 @@ export const routes: Routes = [
         loadChildren: () =>
           import('./features/payment/payment.routes').then((m) => m.PAYMENT_ROUTES),
       },
-      {
-        path: 'cart',
-        loadChildren: () =>
-          import('./features/cart/cart.routes').then((m) => m.CART_ROUTES),
-      },
     ],
   },
 

@@ -12,6 +12,21 @@ export class CartService extends BaseHTTP {
   userCart: CartData | null = null;
   numOfCartItems = new BehaviorSubject<number>(0)
 
+  public isCartPopupOpen = new BehaviorSubject<boolean>(false);
+
+  openCartPopup(): void {
+    this.isCartPopupOpen.next(true);
+  }
+
+  closeCartPopup(): void {
+    this.isCartPopupOpen.next(false);
+  }
+
+  toggleCartPopup(): void {
+    this.isCartPopupOpen.next(!this.isCartPopupOpen.value);
+  }
+
+
   private readonly SAVINGS = 150;
   private readonly TAX_RATE = 0.14;
 

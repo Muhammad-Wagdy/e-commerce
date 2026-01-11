@@ -19,6 +19,10 @@ export class NavbarComponent implements OnInit{
   public readonly cartService = inject(CartService);
   public readonly NgxSpinnerService = inject(NgxSpinnerService);
 
+  openCart(): void {
+    this.cartService.openCartPopup();
+  }
+
   logOut() {
     this.authService.logOut();
   }
