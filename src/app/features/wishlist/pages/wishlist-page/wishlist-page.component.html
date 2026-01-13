@@ -1,0 +1,90 @@
+<section class="max-w-7xl mx-auto px-4 py-8">
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-8">
+    <h1 class="text-2xl font-bold text-gray-900">
+      My Wishlist ❤️
+    </h1>
+
+    @if (count > 0) {
+      <span class="text-gray-500">
+        {{ count }} item{{ count > 1 ? 's' : '' }}
+      </span>
+    }
+  </div>
+
+  <!-- Empty State -->
+  @if (wishlist.length === 0) {
+    <div class="flex flex-col items-center justify-center py-24 text-gray-500">
+      <i class="fa-regular fa-heart text-6xl mb-4"></i>
+      <p class="text-lg font-medium">Your wishlist is empty</p>
+      <p class="text-sm mt-1">
+        Start adding products you love ❤️
+      </p>
+    </div>
+  } @else {
+    <!-- Wishlist Grid -->
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+    >
+      @for (item of wishlist; track item._id ?? item.id) {
+        <div
+          class="bg-white rounded-xl border border-gray-200 shadow-sm
+                transition hover:shadow-md"
+        >
+          <!-- Image -->
+          <a [routerLink]="['/details', item._id]">
+            <img
+              class="h-56 w-full object-contain p-4 bg-gray-50"
+              [src]="item.imageCover"
+              [alt]="item.title"
+            />
+          </a>
+
+          <!-- Content -->
+          <div class="p-4">
+            <h3 class="font-semibold text-gray-900 line-clamp-1">
+              {{ item.title }}
+            </h3>
+
+            <p class="text-sm text-gray-500 mt-1">
+              {{ item.category.name }} • {{ item.brand.name }}
+            </p>
+
+            <div class="flex items-center justify-between mt-3">
+              <span class="text-lg font-bold text-gray-900">
+                {{ item.price }} $
+              </span>
+
+              <span class="flex items-center text-sm text-yellow-500">
+                {{ item.ratingsAverage }}
+                <i class="fa-solid fa-star ml-1"></i>
+              </span>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex gap-2 mt-4">
+              <!-- Add to Cart -->
+              <button
+                (click)="wishlistService.addToWishlist(item._id)"
+                class="btn-main flex-1"
+              >
+                Add to cart
+              </button>
+
+              <!-- Remove -->
+              <button
+                (click)="delete(item._id)"
+                class="flex items-center justify-center w-10 h-10
+                      rounded-md border border-red-200 text-red-500
+                      hover:bg-red-50 transition"
+                title="Remove from wishlist"
+              >
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</section>

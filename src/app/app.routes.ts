@@ -1,4 +1,3 @@
-import { PAYMENT_ROUTES } from './features/payment/payment.routes';
 // app.routes.ts
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth-guard';
@@ -76,6 +75,11 @@ export const routes: Routes = [
         path: 'payment/:cartId',
         loadChildren: () =>
           import('./features/payment/payment.routes').then((m) => m.PAYMENT_ROUTES),
+      },
+      {
+        path: 'wishlist',
+        loadChildren: () =>
+        import('./features/wishlist/wishlist.routes').then((m) => m.WISHLIST_ROUTES),
       },
     ],
   },

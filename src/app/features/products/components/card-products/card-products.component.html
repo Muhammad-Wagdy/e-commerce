@@ -20,9 +20,13 @@
       </div>
       <p class="leading-relaxed mb-3 line-clamp-2">{{ product.description }}</p>
       <div class="flex items-center justify-between">
-        <button [disabled]="isLoading" (click)="addToCart(product._id)" class="btn-main text-center w-3/4">
-          @if(isLoading){
-            Adding... <i class="fas fa-spinner fa-spin mx-2 "></i>
+        <button
+          [disabled]="isLoadingCart"
+          (click)="addToCart(product._id)"
+          class="btn-main text-center w-3/4"
+        >
+          @if(isLoadingCart){
+            Adding... <i class="fas fa-spinner fa-spin mx-2"></i>
           }@else{
             Add to cart
           }
@@ -33,17 +37,32 @@
       </div>
     </div>
   </div>
+
+  <!-- Wishlist Button -->
   <button
-    class="cursor-pointer absolute top-5 end-5 duration-200 ease-in translate-x-[200%] group-hover:translate-x-0"
+    (click)="toggleWishlist(product._id)"
+    [disabled]="isLoadingWishlist"
+    class="cursor-pointer absolute top-5 end-5 duration-200 ease-in translate-x-[200%] group-hover:translate-x-0 disabled:opacity-50"
+    [attr.aria-label]="isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'"
   >
     <div class="inline-flex flex-col items-center cursor-pointer group/heart">
       <span class="relative w-8 h-8 inline-block">
-        <i
-          class="fa-regular fa-heart text-red-700 text-4xl absolute inset-0 opacity-100 group-hover/heart:opacity-0 transition-opacity duration-300"
-        ></i>
-        <i
-          class="fa-solid fa-heart text-red-700 text-4xl absolute inset-0 opacity-0 group-hover/heart:opacity-100 transition-opacity duration-300"
-        ></i>
+        @if(isLoadingWishlist) {
+          <i class="fas fa-spinner fa-spin text-red-700 text-4xl absolute inset-0"></i>
+        } @else {
+          @if(isInWishlist) {
+            <!-- Filled heart when in wishlist -->
+            <i class="fa-solid fa-heart text-red-700 text-4xl absolute inset-0"></i>
+          } @else {
+            <!-- Empty heart with hover effect -->
+            <i
+              class="fa-regular fa-heart text-red-700 text-4xl absolute inset-0 opacity-100 group-hover/heart:opacity-0 transition-opacity duration-300"
+            ></i>
+            <i
+              class="fa-solid fa-heart text-red-700 text-4xl absolute inset-0 opacity-0 group-hover/heart:opacity-100 transition-opacity duration-300"
+            ></i>
+          }
+        }
       </span>
     </div>
   </button>

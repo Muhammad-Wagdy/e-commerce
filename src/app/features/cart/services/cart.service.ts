@@ -52,35 +52,24 @@ export class CartService extends BaseHTTP {
       .get<ICartResponse>(APP_APIS.Cart.data)
   }
   addToCart(productId : string) {
-        if (!this.isBrowser) return EMPTY;
+    if (!this.isBrowser) return EMPTY;
 
     return this.http.post<ICartResponse>(APP_APIS.Cart.data,{
       productId : productId
     })
   }
-    updateCart(count : number,productId : string):void{
-          if (!this.isBrowser) return;
+updateCart(count: number, productId: string) {
+  if (!this.isBrowser) return EMPTY;
 
-    this.http.put<ICartResponse>(`${APP_APIS.Cart.data}/${productId}`,{
-      count:count
-    }).subscribe({
-      next: (response)=>{
-        this.userCart = response.data
-        this.numOfCartItems.next(response.numOfCartItems);
-      }
-    })
-  }
-  deleteCartItem(productId : string):void{
-        if (!this.isBrowser) return;
+  return this.http.put<ICartResponse>(
+    `${APP_APIS.Cart.data}/${productId}`,
+    { count }
+  );
+}
+  deleteCartItem(productId : string){
+    if (!this.isBrowser) return EMPTY;
 
-    this.http.delete<ICartResponse>(`${APP_APIS.Cart.data}/${productId}`).subscribe({
-      next:(response)=>{
-        this.userCart = response.data
-        this.numOfCartItems.next(response.numOfCartItems);
-      },
-      error:()=>{
-      }
-    })
+    return this.http.delete<ICartResponse>(`${APP_APIS.Cart.data}/${productId}`)
   }
   clearCart():void{
         if (!this.isBrowser) return;

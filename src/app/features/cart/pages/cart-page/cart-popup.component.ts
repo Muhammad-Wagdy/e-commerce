@@ -43,23 +43,38 @@ export class CartPopupComponent implements OnInit {
         this.cartServices.userCart = response.data;
         this.cartServices.numOfCartItems.next(response.numOfCartItems);
       },
-      error: (error) => {
+      error: () => {
         this.cartServices.userCart = null;
         this.cartServices.numOfCartItems.next(0);
       },
     });
+  }
+  updateCart(count : number,productId : string) : void{
+    this.cartServices.updateCart(count,productId)?.subscribe({
+      next:(response)=>{
+        this.cartServices.userCart = response.data
+        this.cartServices.numOfCartItems.next(response.numOfCartItems)
+      }
+    })
   }
 
   updateItemCount(count: number, ProductId: string): void {
     if (count <= 0) {
       this.deleteCartItem(ProductId);
     } else {
-      this.cartServices.updateCart(count, ProductId);
+      this.updateCart(count, ProductId);
     }
   }
 
   deleteCartItem(productId: string): void {
-    this.cartServices.deleteCartItem(productId);
+    this.cartServices.deleteCartItem(productId).subscribe({
+          next:(response)=>{
+            this.cartServices.userCart = response.data
+            this.cartServices.numOfCartItems.next(response.numOfCartItems);
+          },
+          error:()=>{
+          }
+        });
   }
 
   clearCart(): void {

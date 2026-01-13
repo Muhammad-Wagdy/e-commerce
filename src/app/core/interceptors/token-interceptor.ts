@@ -6,7 +6,7 @@ import { STORED_KEYS } from '../constants/StoredKeys';
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   const platformId = inject(PLATFORM_ID)
 
-  if (!req.urlWithParams.includes('cart') && !req.urlWithParams.includes('orders')) return next(req);
+  if (!req.urlWithParams.includes('cart') && !req.urlWithParams.includes('orders')&& !req.urlWithParams.includes('wishlist')) return next(req);
 
   if (isPlatformBrowser(platformId)) {
     const token = localStorage.getItem(STORED_KEYS.USER_TOKEN)
