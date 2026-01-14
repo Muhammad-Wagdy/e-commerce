@@ -1,97 +1,104 @@
-// app.routes.ts
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth-guard';
 import { loggedUserGuard } from './core/guards/logged-user-guard';
 
 export const routes: Routes = [
-  // Root redirect
+
   {
     path: '',
     pathMatch: 'full',
     redirectTo: 'home',
   },
 
-  // Auth - only for logged out users
+  // ===== AUTH LAYOUT (login / register) =====
   {
     path: 'auth',
-    canActivate: [loggedUserGuard],
+    canActivate: [loggedUserGuard], // يمنع logged-in users
     loadComponent: () =>
-      import('./core/layouts/auth-layout/auth-layout.component').then(
-        (m) => m.AuthLayoutComponent
-      ),
+      import('./core/layouts/auth-layout/auth-layout.component')
+        .then(m => m.AuthLayoutComponent),
     loadChildren: () =>
-      import('./features/auth/auth.routes').then((m) => m.AUTH_ROUTES),
+      import('./features/auth/auth.routes')
+        .then(m => m.AUTH_ROUTES),
   },
 
-  // User - only for logged in users
+  // ===== MAIN LAYOUT (store) =====
   {
     path: '',
-    canActivate: [authGuard],
     loadComponent: () =>
-      import('./core/layouts/main-layout/main-layout.component').then(
-        (m) => m.MainLayoutComponent
-      ),
+      import('./core/layouts/main-layout/main-layout.component')
+        .then(m => m.MainLayoutComponent),
     children: [
+
       {
         path: 'home',
         loadChildren: () =>
-          import('./features/home/home.routes').then((m) => m.HOME_ROUTES),
+          import('./features/home/home.routes')
+            .then(m => m.HOME_ROUTES),
       },
+
       {
         path: 'products',
         loadChildren: () =>
-          import('./features/products/products.routes').then((m) => m.PRODUCTS_ROUTES),
+          import('./features/products/products.routes')
+            .then(m => m.PRODUCTS_ROUTES),
       },
+
       {
         path: 'details/:id/:slug?',
         loadComponent: () =>
-          import('./features/products/pages/product-details/product-details.component').then(
-            (m) => m.ProductDetailsComponent
-          ),
+          import('./features/products/pages/product-details/product-details.component')
+            .then(m => m.ProductDetailsComponent),
       },
-      {
-        path: 'details/:id',
-        loadComponent: () =>
-          import('./features/products/pages/product-details/product-details.component').then(
-            (m) => m.ProductDetailsComponent
-          ),
-      },
+
       {
         path: 'categories',
         loadChildren: () =>
-          import('./features/categories/categories.routes').then((m) => m.CATEGORIES_ROUTES),
+          import('./features/categories/categories.routes')
+            .then(m => m.CATEGORIES_ROUTES),
       },
+
       {
         path: 'brands',
         loadChildren: () =>
-          import('./features/brands/brands.routes').then((m) => m.BRANDS_ROUTES),
+          import('./features/brands/brands.routes')
+            .then(m => m.BRANDS_ROUTES),
       },
+
+      // ===== AUTH ONLY PAGES =====
       {
         path: 'orders',
+        canActivate: [authGuard],
         loadChildren: () =>
-          import('./features/orders/orders.routes').then((m) => m.ORDERS_ROUTES),
+          import('./features/orders/orders.routes')
+            .then(m => m.ORDERS_ROUTES),
       },
-      {
-        path: 'payment/:cartId',
-        loadChildren: () =>
-          import('./features/payment/payment.routes').then((m) => m.PAYMENT_ROUTES),
-      },
+
       {
         path: 'wishlist',
+        canActivate: [authGuard],
         loadChildren: () =>
-        import('./features/wishlist/wishlist.routes').then((m) => m.WISHLIST_ROUTES),
+          import('./features/wishlist/wishlist.routes')
+            .then(m => m.WISHLIST_ROUTES),
+      },
+
+      {
+        path: 'payment/:cartId',
+        canActivate: [authGuard],
+        loadChildren: () =>
+          import('./features/payment/payment.routes')
+            .then(m => m.PAYMENT_ROUTES),
       },
     ],
   },
 
-  // not-found
   {
     path: 'not-found',
     loadComponent: () =>
-      import('./features/static-pages/not-found/not-found.component').then(
-        (m) => m.NotFoundComponent
-      ),
+      import('./features/static-pages/not-found/not-found.component')
+        .then(m => m.NotFoundComponent),
   },
+
   {
     path: '**',
     redirectTo: 'not-found',

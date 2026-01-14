@@ -4,26 +4,14 @@ import { STORED_KEYS } from '../constants/StoredKeys';
 import { inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
-export const authGuard: CanActivateFn = (route, state) => {
-  const router = inject(Router);
+export const authGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
-  const platformId = inject(PLATFORM_ID);
+  const router = inject(Router);
 
-  if (!isPlatformBrowser(platformId)) {
+  if (authService.isLoggedInSubject.value) {
     return true;
   }
 
-  const token = localStorage.getItem(STORED_KEYS.USER_TOKEN);
-
-  if (!token || token.trim() === '') {
-    return router.parseUrl('/auth/login');
-  }
-
-  if (!authService.isTokenValid(token)) {
-
-    authService.clearAuthData();
-    return router.parseUrl('/auth/login');
-  }
-
-  return true;
+  router.navigateByUrl('/auth/login');
+  return false;
 };

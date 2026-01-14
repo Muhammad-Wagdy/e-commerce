@@ -1,5 +1,11 @@
-<app-navbar [isLogin]="true"></app-navbar>
-<router-outlet></router-outlet>
+<app-navbar></app-navbar>
+
+<div class="min-h-screen pt-[72px]">
+  <router-outlet></router-outlet>
+</div>
+
 @if (cartService.isCartPopupOpen | async) {
-  <app-cart-popup (closePopup)="cartService.closeCartPopup()"></app-cart-popup>
+  <app-cart-popup
+    (closePopup)="cartService.closeCartPopup()">
+  </app-cart-popup>
 }
