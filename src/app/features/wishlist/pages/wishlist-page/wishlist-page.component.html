@@ -26,37 +26,37 @@
     <div
       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
     >
-      @for (item of wishlist; track item._id ?? item.id) {
+      @for (wishlistItem of wishlist; track wishlistItem._id ) {
         <div
           class="bg-white rounded-xl border border-gray-200 shadow-sm
                 transition hover:shadow-md"
         >
           <!-- Image -->
-          <a [routerLink]="['/details', item._id]">
+          <a [routerLink]="['/details', wishlistItem._id]">
             <img
               class="h-56 w-full object-contain p-4 bg-gray-50"
-              [src]="item.imageCover"
-              [alt]="item.title"
+              [src]="wishlistItem.imageCover"
+              [alt]="wishlistItem.title"
             />
           </a>
 
           <!-- Content -->
           <div class="p-4">
             <h3 class="font-semibold text-gray-900 line-clamp-1">
-              {{ item.title }}
+              {{ wishlistItem.title }}
             </h3>
 
             <p class="text-sm text-gray-500 mt-1">
-              {{ item.category.name }} • {{ item.brand.name }}
+              {{ wishlistItem.category.name }} • {{ wishlistItem.brand.name }}
             </p>
 
             <div class="flex items-center justify-between mt-3">
               <span class="text-lg font-bold text-gray-900">
-                {{ item.price }} $
+                {{ wishlistItem.price }} $
               </span>
 
               <span class="flex items-center text-sm text-yellow-500">
-                {{ item.ratingsAverage }}
+                {{ wishlistItem.ratingsAverage }}
                 <i class="fa-solid fa-star ml-1"></i>
               </span>
             </div>
@@ -65,7 +65,7 @@
             <div class="flex gap-2 mt-4">
               <!-- Add to Cart -->
               <button
-                (click)="wishlistService.addToWishlist(item._id)"
+                (click)="wishlistService.addToWishlist(wishlistItem._id)"
                 class="btn-main flex-1"
               >
                 Add to cart
@@ -73,10 +73,10 @@
 
               <!-- Remove -->
               <button
-                (click)="delete(item._id)"
+                (click)="deleteFromWishlist(wishlistItem._id)"
                 class="flex items-center justify-center w-10 h-10
                       rounded-md border border-red-200 text-red-500
-                      hover:bg-red-50 transition"
+                      hover:bg-red-50 transition cursor-pointer"
                 title="Remove from wishlist"
               >
                 <i class="fa-solid fa-trash"></i>

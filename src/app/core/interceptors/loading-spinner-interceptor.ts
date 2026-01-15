@@ -14,17 +14,14 @@ const DEBOUNCE_TIME = 100;     // Don't show for fast requests
 
 // URLs that should NOT show spinner
 const SPINNER_BLACKLIST = [
-  '/api/health',
-  '/api/ping',
-  '/analytics',
-  '/tracking'
+  ''
 ];
 
 export const loadingSpinnerInterceptor: HttpInterceptorFn = (req, next) => {
   const spinner = inject(NgxSpinnerService);
 
   // Skip spinner for blacklisted URLs
-  const shouldSkip = SPINNER_BLACKLIST.some(url => req.url.includes(url));
+  const shouldSkip = SPINNER_BLACKLIST.some(url => req.url.includes('products') || req.url.includes('wishlist') || req.url.includes('cart'));
   if (shouldSkip) {
     return next(req);
   }

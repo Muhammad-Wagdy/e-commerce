@@ -15,7 +15,7 @@ export class WishlistPageComponent implements OnInit{
   public readonly wishlistService = inject(WishlistService)
 
   //variables
-  wishlist : wishlistData[]= []
+  wishlist : wishlistData[] = []
   count = 0
 
   ngOnInit(): void {
@@ -29,7 +29,7 @@ export class WishlistPageComponent implements OnInit{
       }
     })
   }
-  delete(productId: string) {
+  deleteFromWishlist(productId: string) {
     this.wishlistService.deleteFromWishlist(productId).subscribe({
       next: (response) => {
         this.wishlist = response.data
