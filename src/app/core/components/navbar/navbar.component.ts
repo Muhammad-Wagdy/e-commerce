@@ -16,6 +16,8 @@ export class NavbarComponent {
   public readonly cartService = inject(CartService);
 
   isLoggedIn = this.authService.isLoggedIn;
+  isMenuOpen = false;
+
 
   logOut() {
     this.authService.logOut();

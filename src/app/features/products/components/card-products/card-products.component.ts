@@ -6,10 +6,11 @@ import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ICartResponse } from '../../../cart/interfaces/ICartResponse';
 import { WishlistService } from '../../../wishlist/services/wishlist.service';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-card-products',
-  imports: [RouterLink],
+  imports: [RouterLink, CurrencyPipe],
   templateUrl: './card-products.component.html',
   styleUrl: './card-products.component.css',
 })

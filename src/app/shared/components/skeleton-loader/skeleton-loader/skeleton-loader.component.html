@@ -1,0 +1,36 @@
+<div
+  class="grid gap-4
+         md:grid-cols-2
+         lg:grid-cols-3
+         xl:{{ columns }}"
+>
+  @for (i of [].constructor(count); track i) {
+    <div
+      class="bg-white border-2 border-gray-200 rounded-lg overflow-hidden animate-pulse relative"
+    >
+      <!-- Image -->
+      <div class="w-full lg:h-72 md:h-36 bg-gray-200"></div>
+
+      <div class="p-6 space-y-3">
+        <div class="h-4 w-24 bg-gray-200 rounded"></div>
+
+        <div class="flex justify-between items-center">
+          <div class="h-5 w-2/3 bg-gray-200 rounded"></div>
+          <div class="h-4 w-10 bg-gray-200 rounded"></div>
+        </div>
+
+        <div class="space-y-2">
+          <div class="h-4 w-full bg-gray-200 rounded"></div>
+          <div class="h-4 w-5/6 bg-gray-200 rounded"></div>
+        </div>
+
+        <div class="flex justify-between items-center pt-2">
+          <div class="h-10 w-3/4 bg-gray-200 rounded-lg"></div>
+          <div class="h-6 w-12 bg-gray-200 rounded"></div>
+        </div>
+      </div>
+
+      <div class="absolute top-5 end-5 w-8 h-8 bg-gray-200 rounded-full"></div>
+    </div>
+  }
+</div>

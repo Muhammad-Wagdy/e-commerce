@@ -1,69 +1,81 @@
-<div class="bg-white relative overflow-hidden group main-card-hover">
-  <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
-    <a [routerLink]="['/details',product._id,product.slug]">
+<div class="bg-white relative overflow-hidden group main-card-hover rounded-xl shadow-sm hover:shadow-2xl transition-all duration-300">
+  <div class="h-full border border-gray-100 rounded-xl overflow-hidden">
+    <a [routerLink]="['/details',product._id,product.slug]" class="block relative overflow-hidden bg-linear-to-br from-gray-50 to-white">
       <img
-        class="lg:h-72 md:h-36 w-full object-contain object-center"
+        class="h-48 sm:h-56 md:h-36 lg:h-72 w-full object-contain object-center transform group-hover:scale-105 transition-transform duration-500"
         [src]="product.imageCover"
         [alt]="product.title"
       />
+      <div class="absolute inset-0 bg-linear-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
     </a>
 
-    <div class="p-6">
-      <span>{{product.category.name}}</span>
-      <div class="flex justify-between">
-        <h2 class="title-font text-lg font-bold text-gray-900 mb-3 line-clamp-1">
+    <div class="p-4 sm:p-5 md:p-6 space-y-2 sm:space-y-3">
+      <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 sm:px-3 py-1 rounded-full uppercase tracking-wide inline-block">
+        {{product.category.name}}
+      </span>
+
+      <div class="flex justify-between items-start gap-2">
+        <h2 class="title-font text-base sm:text-lg font-bold text-gray-900 line-clamp-1 flex-1">
           {{ product.title }}
         </h2>
-        <span class="font-bold inline-flex items-center leading-none text-sm text-rating">
-          {{ product.ratingsAverage }} <i class="fa-solid fa-star"></i>
+        <span class="font-bold inline-flex items-center gap-1 leading-none text-xs sm:text-sm text-rating bg-amber-50 px-2 py-1 rounded-lg whitespace-nowrap">
+          {{ product.ratingsAverage }} <i class="fa-solid fa-star text-amber-400"></i>
         </span>
       </div>
-      <p class="leading-relaxed mb-3 line-clamp-2">{{ product.description }}</p>
-      <div class="flex items-center justify-between">
+
+      <p class="leading-relaxed text-gray-600 text-xs sm:text-sm line-clamp-2 min-h-8 sm:min-h-10">
+        {{ product.description }}
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 sm:gap-3 pt-2">
         <button
           [disabled]="isLoadingCart"
           (click)="addToCart(product._id)"
-          class="btn-main text-center w-3/4"
+          class="btn-main text-center text-sm sm:text-base w-full sm:w-3/4 relative overflow-hidden group/btn transform hover:scale-105 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg py-2 sm:py-auto"
         >
-          @if(isLoadingCart){
-            Adding... <i class="fas fa-spinner fa-spin mx-2"></i>
-          }@else{
-            Add to cart
-          }
+          <span class="relative z-10">
+            @if(isLoadingCart){
+              Adding... <i class="fas fa-spinner fa-spin mx-2"></i>
+            }@else{
+              Add to cart
+            }
+          </span>
+          <div class="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700"></div>
         </button>
-        <span class="text-black font-extrabold text-lg inline-flex items-center leading-none">
-          {{ product.price }} $
-        </span>
+
+        <div class="flex flex-col items-end sm:items-end self-end sm:self-auto">
+          <span class="text-gray-900 font-extrabold text-lg sm:text-xl inline-flex items-center leading-none">
+            {{ product.price |currency:'EGP'}}
+          </span>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Wishlist Button -->
+  <!-- Enhanced Wishlist Button -->
   <button
     (click)="toggleWishlist(product._id)"
     [disabled]="isLoadingWishlist"
-    class="cursor-pointer absolute top-5 end-5 duration-200 ease-in translate-x-[200%] group-hover:translate-x-0 disabled:opacity-50"
+    class="cursor-pointer absolute top-3 sm:top-4 end-3 sm:end-4 duration-300 ease-out translate-x-0 sm:translate-x-[200%] sm:group-hover:translate-x-0 disabled:opacity-50 bg-white rounded-full shadow-lg p-2 hover:shadow-xl transform hover:scale-110 active:scale-95 transition-all w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center"
     [attr.aria-label]="isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'"
   >
-    <div class="inline-flex flex-col items-center cursor-pointer group/heart">
-      <span class="relative w-8 h-8 inline-block">
-        @if(isLoadingWishlist) {
-          <i class="fas fa-spinner fa-spin text-red-700 text-4xl absolute inset-0"></i>
-        } @else {
-          @if(isInWishlist) {
-            <!-- Filled heart when in wishlist -->
-            <i class="fa-solid fa-heart text-red-700 text-4xl absolute inset-0"></i>
-          } @else {
-            <!-- Empty heart with hover effect -->
-            <i
-              class="fa-regular fa-heart text-red-700 text-4xl absolute inset-0 opacity-100 group-hover/heart:opacity-0 transition-opacity duration-300"
-            ></i>
-            <i
-              class="fa-solid fa-heart text-red-700 text-4xl absolute inset-0 opacity-0 group-hover/heart:opacity-100 transition-opacity duration-300"
-            ></i>
-          }
-        }
-      </span>
-    </div>
+    @if(isLoadingWishlist) {
+      <i class="fas fa-spinner fa-spin text-red-600 text-lg sm:text-xl"></i>
+    } @else {
+      @if(isInWishlist) {
+        <!-- Filled heart when in wishlist with pulse animation -->
+        <i class="fa-solid fa-heart text-red-600 text-lg sm:text-xl animate-pulse"></i>
+      } @else {
+        <!-- Empty heart with hover effect -->
+        <span class="relative w-full h-full flex items-center justify-center">
+          <i
+            class="fa-regular fa-heart text-red-600 text-lg sm:text-xl absolute opacity-100 group-hover:opacity-0 transition-opacity duration-300"
+          ></i>
+          <i
+            class="fa-regular fa-heart text-red-600 text-lg sm:text-xl absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:scale-110"
+          ></i>
+        </span>
+      }
+    }
   </button>
 </div>

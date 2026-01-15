@@ -9,10 +9,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { isPlatformBrowser, ViewportScroller } from '@angular/common';
 import { LoadingSpinnerComponent } from '../../../../shared/components/loading-spinner/loading-spinner.component';
 import { allProducts } from '../../../../core/interfaces/IAllProductsResponse';
+import { SkeletonLoaderComponent } from "../../../../shared/components/skeleton-loader/skeleton-loader/skeleton-loader.component";
 
 @Component({
   selector: 'app-products-page',
-  imports: [CardProductsComponent, SectionHeaderComponent, LoadingSpinnerComponent, NgxPaginationModule, NgxSkeletonLoaderModule],
+  imports: [CardProductsComponent, SectionHeaderComponent, LoadingSpinnerComponent, NgxPaginationModule, NgxSkeletonLoaderModule, SkeletonLoaderComponent],
   templateUrl: './products-page.component.html',
   styleUrl: './products-page.component.css',
 })

@@ -13,7 +13,7 @@ export const routes: Routes = [
   // ===== AUTH LAYOUT (login / register) =====
   {
     path: 'auth',
-    canActivate: [loggedUserGuard], // يمنع logged-in users
+    canActivate: [loggedUserGuard], // no logged-in users
     loadComponent: () =>
       import('./core/layouts/auth-layout/auth-layout.component')
         .then(m => m.AuthLayoutComponent),

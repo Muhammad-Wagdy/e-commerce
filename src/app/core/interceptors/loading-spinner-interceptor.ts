@@ -1,38 +1,76 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { finalize, timer } from 'rxjs';
+import { finalize } from 'rxjs';
 
-let activeRequests = 0; // Track concurrent requests
+let activeRequests = 0;
+let showTimer: any = null;
+let hideTimer: any = null;
+let spinnerVisible = false;
+let spinnerStartTime = 0;
 
-const SKIP_URLS = ['products', 'wishlist', 'cart']; // URLs where spinner is not needed
-const MIN_SPINNER_TIME = 300; // Minimum display time in ms
+const MIN_SPINNER_TIME = 300;  // Prevent flashing
+const DEBOUNCE_TIME = 100;     // Don't show for fast requests
+
+// URLs that should NOT show spinner
+const SPINNER_BLACKLIST = [
+  '/api/health',
+  '/api/ping',
+  '/analytics',
+  '/tracking'
+];
 
 export const loadingSpinnerInterceptor: HttpInterceptorFn = (req, next) => {
   const spinner = inject(NgxSpinnerService);
 
-  // Skip spinner for certain URLs
-  if (SKIP_URLS.some(url => req.urlWithParams.includes(url))) {
+  // Skip spinner for blacklisted URLs
+  const shouldSkip = SPINNER_BLACKLIST.some(url => req.url.includes(url));
+  if (shouldSkip) {
     return next(req);
   }
 
   activeRequests++;
-  spinner.show();
 
-  const startTime = Date.now();
+  // Show spinner with debounce on first request
+  if (activeRequests === 1 && !spinnerVisible) {
+    if (showTimer) clearTimeout(showTimer);
+
+    showTimer = setTimeout(() => {
+      spinner.show();
+      spinnerVisible = true;
+      spinnerStartTime = Date.now();
+    }, DEBOUNCE_TIME);
+  }
+
+  // Cancel any pending hide if new request arrives
+  if (hideTimer) {
+    clearTimeout(hideTimer);
+    hideTimer = null;
+  }
 
   return next(req).pipe(
     finalize(() => {
-      const elapsed = Date.now() - startTime;
-      const remaining = MIN_SPINNER_TIME - elapsed;
+      activeRequests--;
 
-      // Ensure spinner shows for at least MIN_SPINNER_TIME
-      setTimeout(() => {
-        activeRequests--;
-        if (activeRequests === 0) {
+      // Hide spinner when all requests complete
+      if (activeRequests === 0) {
+        const elapsed = Date.now() - spinnerStartTime;
+        const remaining = Math.max(MIN_SPINNER_TIME - elapsed, 0);
+
+        if (hideTimer) clearTimeout(hideTimer);
+
+        hideTimer = setTimeout(() => {
+          // Clear show timer in case request finished before debounce
+          if (showTimer) {
+            clearTimeout(showTimer);
+            showTimer = null;
+          }
+
           spinner.hide();
-        }
-      }, remaining > 0 ? remaining : 0);
+          spinnerVisible = false;
+          spinnerStartTime = 0;
+        }, remaining);
+      }
     })
   );
 };
