@@ -1,9 +1,14 @@
-  <owl-carousel-o [options]="customOptions">
-
-    @for (category of categoryService.allCategories; track category._id) {
-      <ng-template carouselSlide [id]="category._id">
-        <img class="h-40" [src]="category.image" [alt]="category.name" [title]="category.name">
-      </ng-template>
-    }
-
-  </owl-carousel-o>
+<owl-carousel-o [options]="customOptions">
+  @for (category of categoryService.allCategories; track category._id) {
+    <ng-template carouselSlide [id]="category._id">
+      <a [routerLink]="['/categories', category._id]" class="block cursor-pointer">
+        <img
+          class="h-40 w-full object-contain hover:opacity-80 transition-opacity"
+          [src]="category.image"
+          [alt]="category.name"
+          [title]="category.name"
+        >
+      </a>
+    </ng-template>
+  }
+</owl-carousel-o>

@@ -2,10 +2,11 @@ import { Component,inject } from '@angular/core';
 import { CategoriesService } from '../../../categories/services/categories.service';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { getOwlOptions } from '../../../../core/utilities/owl-options.service';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-categories-slider',
-  imports: [CarouselModule],
+  imports: [CarouselModule, RouterLink],
   templateUrl: './categories-slider.component.html',
   styleUrl: './categories-slider.component.css',
 })
