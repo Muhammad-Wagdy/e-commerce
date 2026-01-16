@@ -44,23 +44,6 @@
         </div>
 
         <form [formGroup]="userPaymentForm" (ngSubmit)="sendUserPaymentInfo()">
-          <div class="mb-6">
-            <label class="block text-sm font-semibold mb-2">
-              <i class="fas fa-user mr-2"></i>Details
-            </label>
-            <input
-              formControlName="details"
-              type="text"
-              placeholder="Details"
-              class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-green-500 focus:ring-4 focus:ring-green-100 outline-none transition-all duration-200"
-              [class.border-red-500]="(userPaymentForm.get('details')?.invalid && userPaymentForm.get('details')?.touched) || (userPaymentForm.get('details')?.invalid && submitted)"
-            />
-            @if ((userPaymentForm.get('details')?.invalid && userPaymentForm.get('details')?.touched) || (userPaymentForm.get('details')?.invalid && submitted)) {
-              <span class="text-red-500 text-xs mt-1 block">
-                Details are required
-              </span>
-            }
-          </div>
 
           <div class="mb-6">
             <label class="block text-sm font-semibold mb-2">
@@ -82,7 +65,7 @@
 
           <div class="mb-6">
             <label class="block text-sm font-semibold mb-2">
-              <i class="fas fa-map-marker-alt mr-2"></i>Delivery Address
+              <i class="fas fa-map-marker-alt mr-2"></i>City
             </label>
             <input
               formControlName="city"
@@ -94,6 +77,23 @@
             @if (userPaymentForm.get('city')?.invalid && userPaymentForm.get('city')?.touched) {
               <span class="text-red-500 text-xs mt-1 block">
                 Delivery address is required
+              </span>
+            }
+          </div>
+          <div class="mb-6">
+            <label class="block text-sm font-semibold mb-2">
+              <i class="fas fa-user mr-2"></i>Home Details
+            </label>
+            <input
+              formControlName="details"
+              type="text"
+              placeholder="Details"
+              class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-green-500 focus:ring-4 focus:ring-green-100 outline-none transition-all duration-200"
+              [class.border-red-500]="(userPaymentForm.get('details')?.invalid && userPaymentForm.get('details')?.touched) || (userPaymentForm.get('details')?.invalid && submitted)"
+            />
+            @if ((userPaymentForm.get('details')?.invalid && userPaymentForm.get('details')?.touched) || (userPaymentForm.get('details')?.invalid && submitted)) {
+              <span class="text-red-500 text-xs mt-1 block">
+                Details are required
               </span>
             }
           </div>

@@ -1,9 +1,10 @@
   import { Component, inject } from '@angular/core';
-  import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+  import { FormBuilder, FormGroup, PatternValidator, ReactiveFormsModule, Validators } from '@angular/forms';
   import { PaymentService } from '../../services/payment.service';
   import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from '../../../cart/services/cart.service';
 import { CurrencyPipe } from '@angular/common';
+import { PHONE_REGEX } from '../../../auth/interfaces/validators';
 
   @Component({
     selector: 'app-payment-page',
@@ -46,9 +47,9 @@ import { CurrencyPipe } from '@angular/common';
 
     initUserPaymentForm() : void{
       this.userPaymentForm = this.fb.group({
-        details: ['',Validators.required],
-        phone: ['',Validators.required],
+        phone: ['',Validators.required,Validators.pattern(PHONE_REGEX)],
         city: ['',Validators.required],
+        details: ['',Validators.required],
       })
     }
     sendUserPaymentInfo() : void{
