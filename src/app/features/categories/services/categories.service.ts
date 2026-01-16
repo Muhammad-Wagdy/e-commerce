@@ -9,15 +9,8 @@ import { APP_APIS } from '../../../core/constants/app-apis';
 export class CategoriesService extends BaseHTTP {
   allCategories!: ICategory[];
   getAllCategories() {
-    this.http
+    return this.http
       .get<IAllCategoriesResponse>(APP_APIS.CATEGORIES.allCategories)
-      .subscribe({
-        next: (response) => {
-          this.allCategories = response.data;
-        },
-        error: (error) => {
-          console.error('Error fetching categories:', error);
-        },
-      });
+
   }
 }

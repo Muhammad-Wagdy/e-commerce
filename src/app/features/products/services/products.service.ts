@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import {allProducts, IAllProductsResponse } from '../../../core/interfaces/IAllProductsResponse';
 import { BaseHTTP } from '../../../core/utilities/base-http.service';
 import { APP_APIS } from '../../../core/constants/app-apis';
+import { IAllCategoriesResponse } from '../../categories/interfaces/IAllCategoriesResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -20,4 +21,14 @@ export class ProductsService extends BaseHTTP {
   getProductById(productId: string) {
     return this.http.get<ISpecificProductResponse>(APP_APIS.PRODUCT.allProducts + `/${productId}`)
   }
+  getProductsByCategory(categoryId: string) {
+  return this.http.get<IAllProductsResponse>(
+    `${APP_APIS.PRODUCT.allProducts}?category=${categoryId}`
+  );
+}
+  getProductsByBrand(brandId: string) {
+  return this.http.get<IAllProductsResponse>(
+    `${APP_APIS.PRODUCT.allProducts}?brand=${brandId}`
+  );
+}
 }

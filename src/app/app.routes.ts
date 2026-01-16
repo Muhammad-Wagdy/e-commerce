@@ -63,12 +63,24 @@ export const routes: Routes = [
           import('./features/categories/categories.routes')
             .then(m => m.CATEGORIES_ROUTES),
       },
+      {
+        path:'categories/:id',
+        loadComponent:()=>
+          import('./features/categories/pages/specific-category/specific-category.component')
+        .then(m=>m.SpecificCategoryComponent)
+      },
 
       {
         path: 'brands',
         loadChildren: () =>
           import('./features/brands/brands.routes')
             .then(m => m.BRANDS_ROUTES),
+      },
+            {
+        path:'brands/:id',
+        loadComponent:()=>
+          import('./features/brands/pages/brands-page/specific-brand/specific-brand.component')
+        .then(m=>m.SpecificBrandComponent)
       },
 
       // ===== AUTH ONLY PAGES =====
