@@ -1,4 +1,5 @@
 @theme {
+  /* colors */
   --color-main-100: #ceefce;
   --color-main-200: #9dde9d;
   --color-main-300: #6cce6c;
@@ -8,13 +9,17 @@
   --color-main-700: #066806;
   --color-main-800: #044504;
   --color-main-900: #022302;
+
   --color-light: #f0f3f2;
   --color-rating: #ffc908;
 
-  --shadow-main: rgba(145, 158, 171, 0.2) 0px 2px 4px -1px,
-    rgba(145, 158, 171, 0.14) 0px 4px 5px 0px, rgba(145, 158, 171, 0.12);
+  /* fonts */
+  --font-family-main: var(--font-body);
+  --font-family-heading: var(--font-heading);
 
-  --font-family-main: 'Roboto', sans-serif;
+  /* shadow */
+  --shadow-main:
+    rgba(145, 158, 171, 0.2) 0px 2px 4px -1px,
+    rgba(145, 158, 171, 0.14) 0px 4px 5px 0px,
+    rgba(145, 158, 171, 0.12) 0px 8px 10px 0px;
 }
-
-@custom-variant dark (&:where(.dark, .dark *));
