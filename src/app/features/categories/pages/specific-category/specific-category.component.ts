@@ -3,11 +3,11 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ProductsService } from '../../../products/services/products.service';
 import { allProducts } from '../../../../core/interfaces/IAllProductsResponse';
 import { CardProductsComponent } from "../../../products/components/card-products/card-products.component";
-import { LoadingSpinnerComponent } from '../../../../shared/components/loading-spinner/loading-spinner.component';
+import { SkeletonLoaderComponent } from "../../../../shared/components/skeleton-loader/skeleton-loader/skeleton-loader.component";
 
 @Component({
   selector: 'app-specific-category',
-  imports: [CardProductsComponent, LoadingSpinnerComponent, RouterLink],
+  imports: [CardProductsComponent, RouterLink, SkeletonLoaderComponent],
   templateUrl: './specific-category.component.html',
   styleUrl: './specific-category.component.css',
 })
@@ -17,6 +17,7 @@ export class SpecificCategoryComponent implements OnInit {
 
   categoryProducts: allProducts[] = [];
   isLoading = false;
+  limit = 8
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {

@@ -2,11 +2,10 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FlowbiteService } from './core/services/flowbite/flowbite.service';
 import { FooterComponent } from "./core/components/footer/footer.component";
-import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, FooterComponent,NgxSpinnerModule],
+  imports: [RouterOutlet, FooterComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

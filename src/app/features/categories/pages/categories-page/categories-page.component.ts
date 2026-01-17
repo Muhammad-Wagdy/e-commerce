@@ -1,18 +1,19 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CategoriesService } from '../../services/categories.service';
 import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header.component';
-import { LoadingSpinnerComponent } from '../../../../shared/components/loading-spinner/loading-spinner.component';
-import { allProducts } from '../../../../core/interfaces/IAllProductsResponse';
 import { RouterLink } from "@angular/router";
+import { SkeletonLoaderComponent } from "../../../../shared/components/skeleton-loader/skeleton-loader/skeleton-loader.component";
 
 @Component({
   selector: 'app-categories-page',
-  imports: [SectionHeaderComponent, LoadingSpinnerComponent, RouterLink],
+  imports: [SectionHeaderComponent, RouterLink, SkeletonLoaderComponent],
   templateUrl: './categories-page.component.html',
   styleUrl: './categories-page.component.css',
 })
 export class CategoriesPageComponent implements OnInit {
   public readonly categoryService = inject(CategoriesService);
+
+  limit = 8
 
   ngOnInit(): void {
     this.getAllCategories();

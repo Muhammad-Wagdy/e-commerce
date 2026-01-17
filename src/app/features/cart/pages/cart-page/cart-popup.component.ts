@@ -85,7 +85,4 @@ export class CartPopupComponent implements OnInit {
     this.closePopup.emit();
   }
 
-  onCheckout(): void {
-    this.closePopup.emit();
-  }
 }

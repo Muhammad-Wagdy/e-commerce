@@ -3,7 +3,10 @@
 
   <!-- all categories -->
   @if (!categoryService.allCategories) {
-  <app-loading-spinner></app-loading-spinner>
+      <app-skeleton-loader
+      [count]="limit"
+      columns="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+    />
   }@else {
   <div class="grid md:grid-cols-3 lg:grid-cols-4">
     @for (category of categoryService.allCategories; track $index) {

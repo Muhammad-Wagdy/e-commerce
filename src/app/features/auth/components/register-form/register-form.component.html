@@ -1,6 +1,6 @@
 <div class="w-full lg:w-auto">
   <div class="mb-10 text-center lg:text-left">
-    <h3 class="text-3xl font-bold">Create a new account</h3>
+    <h3 class="text-3xl">Create a new account</h3>
   </div>
   <form [formGroup]="registerForm" class="max-w-md mx-auto">
     <!-- UserName -->
@@ -10,7 +10,7 @@
       [type]="'text'"
       [id]="'UserName'"
       [name]="'UserName'"
-      [label]="'User Name'"
+      [label]="'Name'"
     ></app-auth-input>
 
     <!-- Email -->
@@ -20,7 +20,7 @@
       [type]="'email'"
       [id]="'UserEmail'"
       [name]="'UserEmail'"
-      [label]="'User Email'"
+      [label]="'Email'"
     ></app-auth-input>
 
     <!-- Password -->
@@ -30,7 +30,7 @@
       [type]="'password'"
       [id]="'UserPassword'"
       [name]="'UserPassword'"
-      [label]="'User Password'"
+      [label]="'Password'"
     ></app-auth-input>
 
     <!-- RePassword -->
@@ -40,7 +40,7 @@
       [type]="'password'"
       [id]="'rePassword'"
       [name]="'rePassword'"
-      [label]="'rePassword'"
+      [label]="'RePassword'"
       [group]="registerForm"
     ></app-auth-input>
 
@@ -51,38 +51,33 @@
       [type]="'tel'"
       [id]="'phone'"
       [name]="'phone'"
-      [label]="'User Phone'"
+      [label]="'Phone'"
     ></app-auth-input>
 
     <!-- Submit Button -->
     <button [disabled]="isLoading" type="submit" (click)="submitData()" class="btn-main w-full">
-      Register @if (isLoading) { <i class="fas fa-spinner fa-spin"></i>}
+      Register @if (isLoading) { <i class="fas fa-spinner fa-spin"></i> }
     </button>
+
     <div class="mt-4">
       @if (errorMessage) {
-      <div>
         <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4" role="alert">
-          <p class="font-bold"></p>
-          <p>
-            {{ errorMessage }}
-          </p>
+          <p></p>
+          <p>{{ errorMessage }}</p>
         </div>
-      </div>
-      }@if (successMessage) {
-      <div>
+      }
+      @if (successMessage) {
         <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4" role="alert">
-          <p class="font-bold"></p>
-          <p class="font-bold">{{ successMessage }}</p>
+          <p>{{ successMessage }}</p>
           <p>you will be redirected in {{ redirectCounter }} seconds....</p>
         </div>
-      </div>
       }
     </div>
 
     <!-- Login Link -->
     <p class="text-md mt-4">
       Do you have an account?
-      <a routerLink="/auth/login" class="text-main-500 font-bold hover:underline"> Log in</a>
+      <a routerLink="/auth/login" class="text-main-500 hover:underline"> Log in</a>
     </p>
   </form>
 </div>

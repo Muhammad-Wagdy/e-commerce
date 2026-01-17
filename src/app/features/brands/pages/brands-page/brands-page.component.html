@@ -3,10 +3,9 @@
 
   <!-- all categories -->
   @if (!brandsService.allBrands) {
-          <div class="bg-gray-100 border-l-4 border-gray-500 text-gray-700 p-4" role="alert">
-          <p class="font-bold">Waiting....</p>
-          <p></p>
-        </div>
+    <app-skeleton-loader
+      columns="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+    />
   }@else {
   <div class="grid md:grid-cols-3 lg:grid-cols-4">
     @for (brand of brandsService.allBrands; track $index) {

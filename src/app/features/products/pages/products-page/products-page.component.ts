@@ -7,13 +7,11 @@ import { ProductsService } from '../../services/products.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isPlatformBrowser, ViewportScroller } from '@angular/common';
-import { LoadingSpinnerComponent } from '../../../../shared/components/loading-spinner/loading-spinner.component';
-import { allProducts } from '../../../../core/interfaces/IAllProductsResponse';
 import { SkeletonLoaderComponent } from "../../../../shared/components/skeleton-loader/skeleton-loader/skeleton-loader.component";
 
 @Component({
   selector: 'app-products-page',
-  imports: [CardProductsComponent, SectionHeaderComponent, LoadingSpinnerComponent, NgxPaginationModule, NgxSkeletonLoaderModule, SkeletonLoaderComponent],
+  imports: [CardProductsComponent, SectionHeaderComponent, NgxPaginationModule, NgxSkeletonLoaderModule, SkeletonLoaderComponent],
   templateUrl: './products-page.component.html',
   styleUrl: './products-page.component.css',
 })
@@ -27,7 +25,6 @@ export class ProductsPageComponent implements OnInit {
 
   page = 1
   limit = 8
-  isFetching = false
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(params => {
@@ -36,15 +33,12 @@ export class ProductsPageComponent implements OnInit {
     })
   }
   getAllProducts(): void {
-    this.isFetching = true;
     this.productsService.getAllProducts(this.page, this.limit).subscribe({
       next: (response) => {
         this.productsService.allProducts = response.data;
         this.productsService.totalProducts = response.results;
-        this.isFetching = false;
       },
       error: () => {
-        this.isFetching = false;
       },
     });
   }
@@ -54,7 +48,7 @@ export class ProductsPageComponent implements OnInit {
       queryParams: { page },
       queryParamsHandling: 'merge'
     })
-    if (!isPlatformBrowser(this.platform)) {
+    if (isPlatformBrowser(this.platform)) {
       this.viewportScroller.scrollToPosition([0, 0], {
         behavior: "smooth"
       })

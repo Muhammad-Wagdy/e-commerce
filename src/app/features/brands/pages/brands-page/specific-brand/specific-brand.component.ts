@@ -2,12 +2,12 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ProductsService } from '../../../../products/services/products.service';
 import { allProducts } from '../../../../../core/interfaces/IAllProductsResponse';
-import { LoadingSpinnerComponent } from "../../../../../shared/components/loading-spinner/loading-spinner.component";
 import { CardProductsComponent } from "../../../../products/components/card-products/card-products.component";
+import { SkeletonLoaderComponent } from "../../../../../shared/components/skeleton-loader/skeleton-loader/skeleton-loader.component";
 
 @Component({
   selector: 'app-specific-brand',
-  imports: [LoadingSpinnerComponent, CardProductsComponent, RouterLink],
+  imports: [CardProductsComponent, RouterLink, SkeletonLoaderComponent],
   templateUrl: './specific-brand.component.html',
   styleUrl: './specific-brand.component.css',
 })

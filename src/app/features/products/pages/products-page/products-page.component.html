@@ -1,21 +1,22 @@
 <section class="px-4 sm:px-6 md:px-10 lg:px-16 xl:px-20 py-6 sm:py-8 md:py-10">
   <app-section-header [title]="'All Products'"></app-section-header>
-  <!-- all products -->
-  @if(!productsService.allProducts){
-  <app-loading-spinner></app-loading-spinner>
-  }@else if (isFetching) {
-      <app-skeleton-loader
-    [count]="limit"
-    columns="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-  />
-  }@else {
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
-    @for (product of productsService.allProducts | paginate: { itemsPerPage : limit,currentPage : page,totalItems : productsService.totalProducts}; track product._id) {
-    <app-card-products [product]="product"></app-card-products>
-    }
-  </div>
-  <div class="flex items-center justify-center mt-6 sm:mt-8 md:mt-10">
-    <pagination-controls (pageChange)="pageChange($event)"></pagination-controls>
-  </div>
-}
+
+  <!-- Loading State -->
+  @if(!productsService.allProducts) {
+    <app-skeleton-loader
+      columns="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+    />
+  } @else {
+    <!-- Products Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
+      @for (product of productsService.allProducts | paginate: { itemsPerPage: limit, currentPage: page, totalItems: productsService.totalProducts }; track product._id) {
+        <app-card-products [product]="product"></app-card-products>
+      }
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex items-center justify-center mt-6 sm:mt-8 md:mt-10">
+      <pagination-controls (pageChange)="pageChange($event)"></pagination-controls>
+    </div>
+  }
 </section>

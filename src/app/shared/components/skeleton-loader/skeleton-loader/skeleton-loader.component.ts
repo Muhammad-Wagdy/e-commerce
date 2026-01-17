@@ -6,6 +6,7 @@ import { Component, Input } from '@angular/core';
   templateUrl: './skeleton-loader.component.html',
 })
 export class SkeletonLoaderComponent {
+  skeletonArray= Array.from({length:8})
   @Input() count = 8;
-  @Input() columns = 'grid-cols-4';
+@Input() columns = 'xl:grid-cols-4';
 }

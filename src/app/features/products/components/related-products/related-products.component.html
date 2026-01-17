@@ -2,7 +2,10 @@
   <app-section-header [title]="'Related Products'"></app-section-header>
   <!-- all products -->
   @if(!productsService.allProducts){
-  <app-loading-spinner></app-loading-spinner>
+    <app-skeleton-loader
+      [count]="limit"
+      columns="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+    />
   }@else {
   <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
     @for (product of productsService.allProducts; track product._id) {
