@@ -18,9 +18,10 @@ export function app() {
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
 
-  // Serve static files
-  server.get('*.*', express.static(browserDistFolder, {
-    maxAge: '1y'
+  // Serve static files - use a different pattern
+  server.use(express.static(browserDistFolder, {
+    maxAge: '1y',
+    index: false
   }));
 
   // All regular routes use the Angular engine
@@ -42,11 +43,4 @@ export function app() {
   return server;
 }
 
-// Only run the server locally, not on Vercel
-if (process.env.NODE_ENV !== 'production') {
-  const port = process.env['PORT'] || 4000;
-  const server = app();
-  server.listen(port, () => {
-    console.log(`Node Express server listening on http://localhost:${port}`);
-  });
-}
+// Only run the server
