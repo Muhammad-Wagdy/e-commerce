@@ -1,18 +1,5 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "dist/E-Commerce/server/server.mjs",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/dist/E-Commerce/server/server.mjs"
-    }
-  ]
+  "buildCommand": "npm run build",
+  "installCommand": "npm install"
 }
