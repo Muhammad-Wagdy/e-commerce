@@ -1,5 +1,3 @@
-import { app } from '../dist/E-Commerce/server/server.vercel.mjs';
+import { reqHandler } from '../dist/E-Commerce/server/server.mjs';
 
-const server = app();
-
-export default server;
+export default reqHandler;
