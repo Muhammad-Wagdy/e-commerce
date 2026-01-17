@@ -38,7 +38,7 @@
               "node_modules//ngx-spinner/animations/ball-atom.css"
             ],
             "server": "src/main.server.ts",
-            "outputMode": "server",
+            "outputMode": "static",
             "ssr": {
               "entry": "src/server.ts"
             }
