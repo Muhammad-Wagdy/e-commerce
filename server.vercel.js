@@ -2,14 +2,15 @@ import 'zone.js/node';
 import { APP_BASE_HREF } from '@angular/common';
 import { CommonEngine } from '@angular/ssr/node';
 import express from 'express';
-import { fileURLToPath } from 'node:url';
-import { dirname, join, resolve } from 'node:path';
+import { join } from 'node:path';
 import bootstrap from './src/main.server';
 
 export function app() {
   const server = express();
-  const serverDistFolder = dirname(fileURLToPath(import.meta.url));
-  const browserDistFolder = resolve(serverDistFolder, '../browser');
+
+  // For Vercel, use process.cwd() instead of import.meta.url
+  const distFolder = process.cwd();
+  const browserDistFolder = join(distFolder, 'dist/E-Commerce/browser');
   const indexHtml = join(browserDistFolder, 'index.html');
 
   const commonEngine = new CommonEngine();
@@ -17,12 +18,13 @@ export function app() {
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
 
-  server.get('**', express.static(browserDistFolder, {
-    maxAge: '1y',
-    index: false,
+  // Serve static files
+  server.get('*.*', express.static(browserDistFolder, {
+    maxAge: '1y'
   }));
 
-  server.get('**', (req, res, next) => {
+  // All regular routes use the Angular engine
+  server.get('*', (req, res, next) => {
     const { protocol, originalUrl, baseUrl, headers } = req;
 
     commonEngine
@@ -40,12 +42,11 @@ export function app() {
   return server;
 }
 
-function run() {
+// Only run the server locally, not on Vercel
+if (process.env.NODE_ENV !== 'production') {
   const port = process.env['PORT'] || 4000;
   const server = app();
   server.listen(port, () => {
     console.log(`Node Express server listening on http://localhost:${port}`);
   });
 }
-
-run();

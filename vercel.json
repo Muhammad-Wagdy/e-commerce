@@ -2,18 +2,10 @@
   "version": 2,
   "buildCommand": "npm run build",
   "installCommand": "npm install",
-  "routes": [
+  "rewrites": [
     {
-      "src": "/assets/(.*)",
-      "dest": "/assets/$1"
-    },
-    {
-      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|json))",
-      "dest": "/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/api/render"
+      "source": "/(.*)",
+      "destination": "/api/index"
     }
   ]
 }
