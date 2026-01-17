@@ -6,8 +6,13 @@ import {
 } from '@angular/ssr/node';
 import express from 'express';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { dirname } from 'node:path';
 
-const browserDistFolder = join(import.meta.dirname, '../browser');
+// Vercel-compatible path resolution
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const browserDistFolder = join(__dirname, '../browser');
 
 const app = express();
 const angularApp = new AngularNodeAppEngine();
