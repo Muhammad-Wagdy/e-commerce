@@ -8,6 +8,8 @@
     "start:prod": "ng s -o --configuration=production",
     "start:alpha": "ng s -o --configuration=alpha",
     "build": "ng build",
+    "serve:ssr": "node dist/E-Commerce/server/server.mjs",
+    "build:ssr": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:E-Commerce": "node dist/E-Commerce/server/server.mjs"
