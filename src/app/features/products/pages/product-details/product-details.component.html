@@ -1,112 +1,117 @@
 @if (!productDetails) {
-  <ngx-spinner type="ball-atom">
-  <img src="/images/freshcart-logo.svg" alt="">
-</ngx-spinner>
-} @else {
-<section class="text-gray-600 body-font overflow-hidden">
-  <div class="container px-5 py-24 mx-auto">
+  <div class="min-h-[70vh] flex items-center justify-center">
+    <ngx-spinner type="ball-atom">
+      <img src="/images/freshcart-logo.svg" alt="">
+    </ngx-spinner>
+  </div>
+}@else {
+<section class="bg-gray-50 py-10">
+  <div class="max-w-7xl mx-auto px-4">
 
-    <!-- MAIN WRAPPER -->
-    <div class="lg:w-4/5 mx-auto flex flex-col lg:flex-row gap-8">
+    <div class="bg-white rounded-2xl shadow-sm p-6 lg:p-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
 
-      <!-- IMAGE SECTION -->
-      <div class="lg:w-1/2 w-full flex flex-col gap-4">
+        <!-- IMAGE GALLERY -->
+        <div class="space-y-6">
 
-        <!-- MAIN IMAGE -->
-        <div class="flex justify-center items-center">
-          <img
-            #mainImage
-            class="w-full max-h-[400px] object-contain rounded-base"
-            [src]="productDetails.imageCover"
-            [alt]="productDetails.title"
-          />
-        </div>
-
-        <!-- THUMBNAILS -->
-        <div class="flex justify-center gap-4 overflow-x-auto">
-          @for (image of productDetails.images; track $index) {
+          <div class="flex justify-center items-center bg-gray-100 rounded-xl p-6">
             <img
-              (click)="mainImage.src = image"
-              class="w-25 h-25 object-contain rounded-base cursor-pointer"
-              [src]="image"
+              #mainImage
+              class="max-h-[420px] w-full object-contain transition-transform duration-300 hover:scale-105"
+              [src]="productDetails.imageCover"
               [alt]="productDetails.title"
             />
-          }
-        </div>
-      </div>
-
-      <!-- DETAILS SECTION -->
-      <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6">
-
-        <!-- BRAND -->
-        <h2 class="text-lg font-bold text-gray-500 tracking-widest flex items-center gap-4">
-          {{ productDetails.brand.name }}
-          <img
-            [src]="productDetails.brand.image"
-            class="w-24 rounded-4xl hover:border-2"
-            [alt]="productDetails.brand.name"
-          />
-        </h2>
-
-        <!-- CATEGORY -->
-        <h1 class="text-gray-900 text-xl font-medium mt-2">
-          {{ productDetails.category.name }}
-        </h1>
-
-        <!-- TITLE -->
-        <h1 class="text-gray-900 text-3xl font-medium mb-4">
-          {{ productDetails.title }}
-        </h1>
-
-        <!-- DESCRIPTION -->
-        <p class="leading-relaxed mb-6">
-          {{ productDetails.description }}
-        </p>
-
-        <!-- RATING / SIZE / PRICE -->
-        <div class="flex flex-wrap justify-between items-center pb-5 border-b border-gray-200 mb-5 gap-4">
-
-          <div class="font-bold text-lg">
-            {{ productDetails.ratingsAverage }}
-            <i class="fas fa-star text-rating"></i>
           </div>
 
-          <div class="flex items-center gap-2">
-            <span>Size</span>
-            <select
-              class="rounded border border-gray-300 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-200"
-            >
-              <option>SM</option>
-              <option>M</option>
-              <option>L</option>
-              <option>XL</option>
-            </select>
-          </div>
-
-          <span class="font-bold text-2xl text-gray-900">
-            {{ productDetails.price }} $
-          </span>
-        </div>
-
-        <!-- ACTIONS -->
-        <div class="flex items-center gap-4">
-          <button (click)="addToCart(productId)" class="flex-1 text-white btn-main py-2 px-6">
-            @if(isLoading){
-              Adding... <i class="fas fa-spinner fa-spin mx-2 "></i>
-            }@else{
-              Add to cart
+          <div class="flex gap-3 justify-center">
+            @for (image of productDetails.images; track $index) {
+              <img
+                (click)="mainImage.src = image"
+                class="w-20 h-20 object-contain bg-gray-100 rounded-lg
+                      cursor-pointer border border-transparent
+                      hover:border-indigo-500 transition"
+                [src]="image"
+                [alt]="productDetails.title"
+              />
             }
-          </button>
+          </div>
+        </div>
 
-          <button class="cursor-pointer duration-200">
-            <i class="fa-regular fa-heart text-red-700 text-3xl"></i>
-          </button>
+        <!-- PRODUCT INFO -->
+        <div class="flex flex-col gap-6">
+
+          <!-- BRAND -->
+          <a [routerLink]="['/brands',productDetails.brand._id]">
+            <div class="flex items-center gap-4">
+              <img
+                [src]="productDetails.brand.image"
+                class="w-16 h-16 rounded-full border"
+                [alt]="productDetails.brand.name"
+              />
+              <span class="uppercase tracking-wide text-sm text-gray-500 font-semibold">
+                {{ productDetails.brand.name }}
+              </span>
+            </div>
+          </a>
+
+          <!-- TITLE -->
+          <h1 class="text-3xl font-bold text-gray-900 leading-tight">
+            {{ productDetails.title }}
+          </h1>
+
+          <!-- CATEGORY -->
+          <a [routerLink]="['/categories',productDetails.category._id]">
+            <span class="inline-block w-fit px-3 py-1 text-sm rounded-full bg-indigo-50 text-indigo-600">
+              {{ productDetails.category.name }}
+            </span>
+          </a>
+
+          <!-- RATING -->
+          <div class="flex items-center gap-2">
+            <span class="text-lg font-semibold">
+              {{ productDetails.ratingsAverage }}
+            </span>
+            <div class="flex text-yellow-400">
+              <i class="fas fa-star"></i>
+            </div>
+          </div>
+
+          <!-- DESCRIPTION -->
+          <p class="text-gray-600 leading-relaxed">
+            {{ productDetails.description }}
+          </p>
+
+          <!-- PRICE -->
+          <div class="text-4xl font-extrabold text-gray-900">
+            {{ productDetails.price | currency:'EGP '}}
+          </div>
+
+          <!-- ACTIONS -->
+          <div class="flex gap-4 pt-4 border-t">
+
+            <button
+              (click)="addToCart(productId)"
+              class="flex-1 btn-main py-3 text-lg flex items-center justify-center gap-2"
+            >
+              @if(isLoading){
+                <i class="fas fa-spinner fa-spin"></i>
+                Adding...
+              } @else {
+                <i class="fa-solid fa-cart-shopping"></i>
+                Add to cart
+              }
+            </button>
+
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- RELATED PRODUCTS -->
-  <app-related-products></app-related-products>
+    <!-- RELATED -->
+    <div class="mt-16">
+      <app-related-products></app-related-products>
+    </div>
+
+  </div>
 </section>
 }

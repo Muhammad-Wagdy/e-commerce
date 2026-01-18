@@ -1,15 +1,15 @@
   import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
-  import { ActivatedRoute } from '@angular/router';
+  import { ActivatedRoute, RouterLink } from '@angular/router';
   import { ProductsService } from '../../services/products.service';
   import { RelatedProductsComponent } from "../../components/related-products/related-products.component";
-  import { isPlatformBrowser, ViewportScroller } from '@angular/common';
+  import { CurrencyPipe, isPlatformBrowser, ViewportScroller } from '@angular/common';
   import { CartService } from '../../../cart/services/cart.service';
 import { Product } from '../../interfaces/ISpecificProductResponse';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
   @Component({
     selector: 'app-product-details',
-    imports: [ RelatedProductsComponent,NgxSpinnerModule],
+    imports: [RelatedProductsComponent, NgxSpinnerModule, RouterLink,CurrencyPipe],
     templateUrl: './product-details.component.html',
     styleUrl: './product-details.component.css',
   })

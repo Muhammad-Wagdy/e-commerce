@@ -80,11 +80,11 @@ export class CardProductsComponent implements OnInit, OnDestroy {
     // Determine API call based on PREVIOUS state (before toggle)
     // If it WAS in wishlist (solid) -> DELETE
     // If it WASN'T in wishlist (regular) -> ADD
-    const request$ = previousState
+    const request = previousState
       ? this.wishlistService.deleteFromWishlist(productId)
       : this.wishlistService.addToWishlist(productId);
 
-    request$.subscribe({
+    request.subscribe({
       next: () => {
         this.isLoadingWishlist = false;
 
