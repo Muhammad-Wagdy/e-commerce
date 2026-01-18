@@ -27,9 +27,6 @@
       autoplayTimeout: 3000,
       autoplayHoverPause: true,
       smartSpeed: 800,
-      mouseDrag: true,
-      touchDrag: true,
-      pullDrag: true,
       dots:false,
       responsive: {
         0: { items: 2 },
