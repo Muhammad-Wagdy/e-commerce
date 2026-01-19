@@ -1,99 +1,251 @@
-<nav class="bg-neutral-primary fixed w-full z-20 top-0 border-b border-default">
+<nav class="bg-neutral-primary fixed w-full z-20 top-0 border-b border-default shadow-sm">
   <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-16">
+    <div class="flex items-center justify-between h-14 sm:h-16">
 
       <!-- Logo -->
-      <a routerLink="/home" class="flex items-center">
-        <img src="/images/freshcart-logo.svg" alt="fresh-cart-logo" class="h-8 sm:h-10" />
+      <a routerLink="/home" class="flex items-center shrink-0">
+        <img src="/images/freshcart-logo.svg" alt="fresh-cart-logo" class="h-7 sm:h-8 md:h-10" />
       </a>
 
       <!-- Desktop Links -->
-      <ul class="hidden md:flex items-center gap-6">
+      <ul class="hidden lg:flex items-center gap-4 xl:gap-6">
         <li>
-          <a routerLink="/home" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="nav-link font-semibold">
+          <a routerLink="/home" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="nav-link font-semibold text-sm xl:text-base">
             Home
           </a>
         </li>
         <li>
-          <a routerLink="/products" routerLinkActive="active-link" class="nav-link font-semibold">
+          <a routerLink="/products" routerLinkActive="active-link" class="nav-link font-semibold text-sm xl:text-base">
             Products
           </a>
         </li>
         <li>
-          <a routerLink="/categories" routerLinkActive="active-link" class="nav-link font-semibold">
+          <a routerLink="/categories" routerLinkActive="active-link" class="nav-link font-semibold text-sm xl:text-base">
             Categories
           </a>
         </li>
         <li>
-          <a routerLink="/brands" routerLinkActive="active-link" class="nav-link font-semibold">
+          <a routerLink="/brands" routerLinkActive="active-link" class="nav-link font-semibold text-sm xl:text-base">
             Brands
           </a>
         </li>
 
         @if(isLoggedIn | async) {
-<li>
-  <button
-    (click)="openCart()"
-    class="relative nav-link font-semibold
-          flex items-center gap-2
-          transition-all duration-200
-          hover:text-main-500
-          hover:scale-105
-          active:scale-95 cursor-pointer"
-  >
-    <i class="fas fa-shopping-cart text-lg"></i>
+          <li>
+            <button
+              (click)="openCart()"
+              class="relative nav-link font-semibold text-sm xl:text-base
+                    flex items-center gap-2
+                    transition-all duration-200
+                    hover:text-main-500
+                    hover:scale-105
+                    active:scale-95 cursor-pointer"
+              aria-label="Open cart"
+            >
+              <i class="fas fa-shopping-cart text-base xl:text-lg"></i>
 
-    @if ((cartService.numOfCartItems | async)) {
-      <span
-        class="absolute -top-1 -right-2
-              bg-red-500 text-white text-xs
-              rounded-full h-5 w-5
-              flex items-center justify-center
-              shadow-md
-              animate-pulse"
-      >
-        {{ cartService.numOfCartItems | async }}
-      </span>
-    }
-  </button>
-</li>
+              @if ((cartService.numOfCartItems | async)) {
+                <span
+                  class="absolute -top-1 -right-2
+                        bg-red-500 text-white text-xs
+                        rounded-full h-4 w-4 xl:h-5 xl:w-5
+                        flex items-center justify-center
+                        shadow-md font-bold
+                        animate-pulse"
+                >
+                  {{ cartService.numOfCartItems | async }}
+                </span>
+              }
+            </button>
+          </li>
 
-          <li><a routerLink="/wishlist" routerLinkActive="active-link" class="nav-link font-semibold">Wishlist</a></li>
-          <li><a routerLink="/orders" routerLinkActive="active-link" class="nav-link font-semibold">Orders</a></li>
-          <li><button (click)="logOut()" class="nav-link cursor-pointer text-red-600 font-semibold">Logout</button></li>
+          <li>
+            <a routerLink="/wishlist" routerLinkActive="active-link" class="nav-link font-semibold text-sm xl:text-base">
+              Wishlist
+            </a>
+          </li>
+          <li>
+            <a routerLink="/orders" routerLinkActive="active-link" class="nav-link font-semibold text-sm xl:text-base">
+              Orders
+            </a>
+          </li>
+          <li>
+            <button (click)="logOut()" class="nav-link cursor-pointer text-red-600 font-semibold text-sm xl:text-base hover:text-red-700 transition-colors">
+              Logout
+            </button>
+          </li>
         } @else {
-          <li><a routerLink="/auth/login" routerLinkActive="active-link" class="nav-link font-semibold">Login</a></li>
-          <li><a routerLink="/auth/register" routerLinkActive="active-link" class="nav-link font-semibold">Register</a></li>
+          <li>
+            <a routerLink="/auth/login" routerLinkActive="active-link" class="nav-link font-semibold text-sm xl:text-base">
+              Login
+            </a>
+          </li>
+          <li>
+            <a routerLink="/auth/register" routerLinkActive="active-link" class="nav-link font-semibold text-sm xl:text-base">
+              Register
+            </a>
+          </li>
         }
       </ul>
 
-      <!-- Mobile Toggle -->
-      <button
-        class="md:hidden p-2 cursor-pointer rounded-lg hover:bg-neutral-secondary-soft"
-        (click)="isMenuOpen = !isMenuOpen"
-        aria-label="Toggle menu"
-      >
-        <i class="fas fa-bars text-lg"></i>
-      </button>
+      <!-- Mobile Right Section: Cart + Menu Toggle -->
+      <div class="lg:hidden flex items-center gap-1">
+        <!-- Mobile Cart Icon (visible on mobile when logged in) -->
+        @if(isLoggedIn | async) {
+          <button
+            (click)="openCart()"
+            class="relative nav-link font-semibold
+                  flex items-center gap-2
+                  transition-all duration-200
+                  hover:text-main-500
+                  hover:scale-105
+                  active:scale-95 cursor-pointer
+                  p-2"
+            aria-label="Open cart"
+          >
+            <i class="fas fa-shopping-cart text-lg"></i>
+
+            @if ((cartService.numOfCartItems | async)) {
+              <span
+                class="absolute -top-1 -right-2
+                      bg-red-500 text-white text-xs
+                      rounded-full h-5 w-5
+                      flex items-center justify-center
+                      shadow-md
+                      animate-pulse"
+              >
+                {{ cartService.numOfCartItems | async }}
+              </span>
+            }
+          </button>
+        }
+
+        <!-- Mobile Toggle -->
+        <button
+          class="p-2 cursor-pointer rounded-lg hover:bg-neutral-secondary-soft transition-colors"
+          (click)="isMenuOpen = !isMenuOpen"
+          [attr.aria-expanded]="isMenuOpen"
+          aria-label="Toggle menu"
+        >
+          <i class="fas text-lg transition-transform duration-300"
+             [class.fa-bars]="!isMenuOpen"
+             [class.fa-times]="isMenuOpen"
+             [class.rotate-90]="isMenuOpen"></i>
+        </button>
+      </div>
 
     </div>
 
     <!-- Mobile Menu -->
-    <div class="md:hidden transition-all duration-300" [class.hidden]="!isMenuOpen">
-      <ul class="flex flex-col gap-2 py-4 border-t">
-        <li><a routerLink="/home" routerLinkActive="active-link" class="mobile-link font-semibold">Home</a></li>
-        <li><a routerLink="/products" routerLinkActive="active-link" class="mobile-link font-semibold">Products</a></li>
-        <li><a routerLink="/categories" routerLinkActive="active-link" class="mobile-link font-semibold">Categories</a></li>
-        <li><a routerLink="/brands" routerLinkActive="active-link" class="mobile-link font-semibold">Brands</a></li>
+    <div
+      class="lg:hidden overflow-hidden transition-all duration-300 ease-in-out"
+      [class.max-h-0]="!isMenuOpen"
+      [class.max-h-screen]="isMenuOpen"
+      [class.opacity-0]="!isMenuOpen"
+      [class.opacity-100]="isMenuOpen"
+    >
+      <ul class="flex flex-col gap-1 py-3 border-t border-default">
+        <li>
+          <a
+            routerLink="/home"
+            routerLinkActive="active-link"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="mobile-link font-semibold block px-3 py-2.5 rounded-lg hover:bg-neutral-secondary-soft transition-colors text-sm"
+            (click)="isMenuOpen = false"
+          >
+            <i class="fas fa-home w-5 text-center mr-2"></i>
+            Home
+          </a>
+        </li>
+        <li>
+          <a
+            routerLink="/products"
+            routerLinkActive="active-link"
+            class="mobile-link font-semibold block px-3 py-2.5 rounded-lg hover:bg-neutral-secondary-soft transition-colors text-sm"
+            (click)="isMenuOpen = false"
+          >
+            <i class="fas fa-box w-5 text-center mr-2"></i>
+            Products
+          </a>
+        </li>
+        <li>
+          <a
+            routerLink="/categories"
+            routerLinkActive="active-link"
+            class="mobile-link font-semibold block px-3 py-2.5 rounded-lg hover:bg-neutral-secondary-soft transition-colors text-sm"
+            (click)="isMenuOpen = false"
+          >
+            <i class="fas fa-th-large w-5 text-center mr-2"></i>
+            Categories
+          </a>
+        </li>
+        <li>
+          <a
+            routerLink="/brands"
+            routerLinkActive="active-link"
+            class="mobile-link font-semibold block px-3 py-2.5 rounded-lg hover:bg-neutral-secondary-soft transition-colors text-sm"
+            (click)="isMenuOpen = false"
+          >
+            <i class="fas fa-tag w-5 text-center mr-2"></i>
+            Brands
+          </a>
+        </li>
 
         @if(isLoggedIn | async) {
-          <li><button (click)="openCart()" class="mobile-link cursor-pointer text-left font-semibold">Cart</button></li>
-          <li><a routerLink="/wishlist" routerLinkActive="active-link" class="mobile-link font-semibold">Wishlist</a></li>
-          <li><a routerLink="/orders" routerLinkActive="active-link" class="mobile-link font-semibold">Orders</a></li>
-          <li><button (click)="logOut()" class="mobile-link cursor-pointer text-left text-red-600 font-semibold">Logout</button></li>
+          <li class="border-t border-default mt-2 pt-2">
+            <a
+              routerLink="/wishlist"
+              routerLinkActive="active-link"
+              class="mobile-link font-semibold block px-3 py-2.5 rounded-lg hover:bg-neutral-secondary-soft transition-colors text-sm"
+              (click)="isMenuOpen = false"
+            >
+              <i class="fas fa-heart w-5 text-center mr-2"></i>
+              Wishlist
+            </a>
+          </li>
+          <li>
+            <a
+              routerLink="/orders"
+              routerLinkActive="active-link"
+              class="mobile-link font-semibold block px-3 py-2.5 rounded-lg hover:bg-neutral-secondary-soft transition-colors text-sm"
+              (click)="isMenuOpen = false"
+            >
+              <i class="fas fa-shopping-bag w-5 text-center mr-2"></i>
+              Orders
+            </a>
+          </li>
+          <li class="border-t border-default mt-2 pt-2">
+            <button
+              (click)="logOut(); isMenuOpen = false"
+              class="mobile-link cursor-pointer text-left text-red-600 font-semibold w-full block px-3 py-2.5 rounded-lg hover:bg-red-50 transition-colors text-sm"
+            >
+              <i class="fas fa-sign-out-alt w-5 text-center mr-2"></i>
+              Logout
+            </button>
+          </li>
         } @else {
-          <li><a routerLink="/auth/login" routerLinkActive="active-link" class="mobile-link font-semibold">Login</a></li>
-          <li><a routerLink="/auth/register" routerLinkActive="active-link" class="mobile-link font-semibold">Register</a></li>
+          <li class="border-t border-default mt-2 pt-2">
+            <a
+              routerLink="/auth/login"
+              routerLinkActive="active-link"
+              class="mobile-link font-semibold block px-3 py-2.5 rounded-lg hover:bg-neutral-secondary-soft transition-colors text-sm"
+              (click)="isMenuOpen = false"
+            >
+              <i class="fas fa-sign-in-alt w-5 text-center mr-2"></i>
+              Login
+            </a>
+          </li>
+          <li>
+            <a
+              routerLink="/auth/register"
+              routerLinkActive="active-link"
+              class="mobile-link font-semibold block px-3 py-2.5 rounded-lg hover:bg-neutral-secondary-soft transition-colors text-sm"
+              (click)="isMenuOpen = false"
+            >
+              <i class="fas fa-user-plus w-5 text-center mr-2"></i>
+              Register
+            </a>
+          </li>
         }
       </ul>
     </div>

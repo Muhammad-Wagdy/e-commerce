@@ -1,35 +1,40 @@
-<section class="px-10 md:px-20">
+<section class="px-4 sm:px-6 md:px-10 lg:px-16 xl:px-20 py-6 sm:py-8">
   <app-section-header [title]="'All Categories'"></app-section-header>
 
   <!-- all categories -->
   @if (!categoryService.allCategories) {
-      <app-skeleton-loader
+    <app-skeleton-loader
       [count]="limit"
       columns="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
     />
-  }@else {
-  <div class="grid md:grid-cols-3 lg:grid-cols-4">
-    @for (category of categoryService.allCategories; track $index) {
-    <div class="p-4 bg-white">
-      <div class="main-card-hover">
-        <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
-          <a [routerLink]="['/categories',category._id]">
-            <img
-              class="lg:h-96 md:h-36 w-full object-contain object-center"
-              [src]="category.image"
-              [alt]="category.name"
-            />
-          </a>
-          <div class="p-6">
-            <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
-              CATEGORY
-            </h2>
-            <h3 class="title-font text-lg font-medium text-gray-900 mb-3">{{ category.name }}</h3>
+  } @else {
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+      @for (category of categoryService.allCategories; track $index) {
+        <div class="bg-white rounded-lg overflow-hidden">
+          <div class="main-card-hover h-full">
+            <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg">
+              <a [routerLink]="['/categories', category._id]" class="block">
+                <div class="aspect-4/3 sm:aspect-square lg:aspect-3/4 w-full overflow-hidden bg-gray-100">
+                  <img
+                    class="w-full h-full object-contain object-center transition-transform duration-300 hover:scale-105"
+                    [src]="category.image"
+                    [alt]="category.name"
+                    loading="lazy"
+                  />
+                </div>
+              </a>
+              <div class="p-4 sm:p-5 lg:p-6">
+                <h2 class="tracking-widest text-2xs sm:text-xs title-font font-medium text-gray-400 mb-1 uppercase">
+                  CATEGORY
+                </h2>
+                <h3 class="title-font text-base sm:text-lg font-medium text-gray-900 mb-0 line-clamp-2">
+                  {{ category.name }}
+                </h3>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      }
     </div>
-    }
-  </div>
   }
 </section>
