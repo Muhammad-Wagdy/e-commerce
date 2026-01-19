@@ -6,10 +6,11 @@
   import { CartService } from '../../../cart/services/cart.service';
 import { Product } from '../../interfaces/ISpecificProductResponse';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { RatingStarsComponent } from "../../../../shared/components/rating-stars/rating-stars.component";
 
   @Component({
     selector: 'app-product-details',
-    imports: [RelatedProductsComponent, NgxSpinnerModule, RouterLink,CurrencyPipe],
+    imports: [RelatedProductsComponent, NgxSpinnerModule, RouterLink, CurrencyPipe, RatingStarsComponent],
     templateUrl: './product-details.component.html',
     styleUrl: './product-details.component.css',
   })

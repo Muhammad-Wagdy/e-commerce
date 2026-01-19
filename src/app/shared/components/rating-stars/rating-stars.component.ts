@@ -7,11 +7,10 @@ import { Component, Input } from '@angular/core';
   styleUrl: './rating-stars.component.css',
 })
 export class RatingStarsComponent{
-  @Input() ratingAverage = 0;
-  @Input() ratingQuantity = 0;
+  @Input() ratingAverage: number = 0;
+  @Input() ratingQuantity: number = 0;
 
   stars = [1, 2, 3, 4, 5];
-
 
   }
 

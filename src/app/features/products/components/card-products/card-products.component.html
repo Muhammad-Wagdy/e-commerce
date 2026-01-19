@@ -45,7 +45,7 @@
 
         <div class="flex flex-col items-end sm:items-end self-end sm:self-auto  mt-4 sm:mt-0">
           <span class="text-gray-900 text-lg sm:text-xl inline-flex items-center leading-none">
-            {{ product.price | currency:'EGP'}}
+            {{ product.price | currency:'EGP': 'symbol' : '1.0-0'}}
           </span>
         </div>
       </div>
