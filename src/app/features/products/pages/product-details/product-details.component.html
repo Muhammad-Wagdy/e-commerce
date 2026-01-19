@@ -24,7 +24,7 @@
               @for (image of productDetails.images; track $index) {
                 <img
                   (click)="mainImage.src = image"
-                  class="w-20 h-20 object-contain bg-gray-100 rounded-lg cursor-pointer border border-transparent hover:border-indigo-500 transition"
+                  class="w-20 h-20 object-contain bg-gray-100 rounded-lg cursor-pointer border border-transparent hover:border-green-500 transition"
                   [src]="image"
                   [alt]="productDetails.title"
                 />
@@ -35,18 +35,18 @@
           <!-- PRODUCT INFO -->
           <div class="flex flex-col gap-6">
             <!-- BRAND -->
-            <a [routerLink]="['/brands', productDetails.brand._id]">
-              <div class="flex items-center gap-4">
+            <div class="flex items-center gap-4">
+                <a [routerLink]="['/brands', productDetails.brand._id]">
                 <img
                   [src]="productDetails.brand.image"
                   class="w-16 h-16 rounded-full border"
                   [alt]="productDetails.brand.name"
                 />
+              </a>
                 <span class="uppercase tracking-wide text-sm text-gray-500 font-semibold">
                   {{ productDetails.brand.name }}
                 </span>
               </div>
-            </a>
 
             <!-- TITLE -->
             <h1 class="text-3xl font-bold text-gray-900 leading-tight">
