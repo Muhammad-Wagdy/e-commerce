@@ -3,7 +3,6 @@ import { RouterLink } from '@angular/router';
 import { allProducts } from '../../../../core/interfaces/IAllProductsResponse';
 import { CartService } from '../../../cart/services/cart.service';
 import { ToastrService } from 'ngx-toastr';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ICartResponse } from '../../../cart/interfaces/ICartResponse';
 import { WishlistService } from '../../../wishlist/services/wishlist.service';
 import { CurrencyPipe } from '@angular/common';

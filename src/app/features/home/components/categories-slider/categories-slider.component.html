@@ -1,14 +1,46 @@
-<owl-carousel-o [options]="customOptions">
-  @for (category of categoryService.allCategories; track category._id) {
-    <ng-template carouselSlide [id]="category._id">
+<!-- categories-slider.component.html -->
+@if (showCarousel && categoryService.allCategories.length) {
+  <owl-carousel-o [options]="customOptions">
+    @for (category of categoryService.allCategories; track category._id; let i = $index) {
+      <ng-template carouselSlide [id]="category._id">
+        <a [routerLink]="['/categories', category._id]" class="block cursor-pointer">
+          <img
+            class="h-40 w-full object-contain hover:opacity-80 transition-opacity"
+            [src]="category.image"
+            [alt]="category.name"
+            [title]="category.name"
+            width="200"
+            height="160"
+            [loading]="i < 8 ? 'eager' : 'lazy'"
+            decoding="async"
+          >
+        </a>
+      </ng-template>
+    }
+  </owl-carousel-o>
+} @else if (categoryService.allCategories.length) {
+  <!-- SSR/Hydration Fallback: Show first 8 categories -->
+  <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
+    @for (category of categoryService.allCategories.slice(0, 8); track category._id) {
       <a [routerLink]="['/categories', category._id]" class="block cursor-pointer">
         <img
           class="h-40 w-full object-contain hover:opacity-80 transition-opacity"
           [src]="category.image"
           [alt]="category.name"
           [title]="category.name"
+          width="200"
+          height="160"
+          loading="eager"
+          decoding="async"
         >
       </a>
-    </ng-template>
-  }
-</owl-carousel-o>
+    }
+  </div>
+} @else {
+  <!-- Loading skeleton -->
+  <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
+    @for (item of [1,2,3,4,5,6,7,8]; track item) {
+      <div class="h-40 bg-gray-200 animate-pulse rounded-lg"></div>
+    }
+  </div>
+}
