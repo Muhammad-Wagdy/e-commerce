@@ -1,11 +1,16 @@
 <div class="bg-white relative overflow-hidden group main-card-hover rounded-xl shadow-sm hover:shadow-2xl transition-all duration-300">
   <div class="h-full border border-gray-100 rounded-xl overflow-hidden">
     <a [routerLink]="['/details', product._id, product.slug]" class="block relative overflow-hidden bg-linear-to-br from-gray-50 to-white">
-      <img
-        class="h-48 sm:h-56 md:h-36 lg:h-72 w-full object-contain object-center transform group-hover:scale-105 transition-transform duration-500"
-        [src]="product.imageCover"
-        [alt]="product.title"
-      />
+  <div class="w-full h-48 sm:h-56 lg:h-72 overflow-hidden bg-gray-100">
+    <img
+      [src]="product.imageCover"
+      [alt]="product.title"
+      class="w-full h-full object-contain"
+      loading="lazy"
+      width="400"
+      height="400"
+    >
+  </div>
       <div class="absolute inset-0 bg-linear-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
     </a>
 

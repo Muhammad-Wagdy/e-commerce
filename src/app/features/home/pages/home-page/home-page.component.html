@@ -1,12 +1,7 @@
-@defer (on idle; hydrate on viewport) {
+@defer (on idle; hydrate on idle) {
   <app-main-slider></app-main-slider>
-} @placeholder {
-  <div class="w-full h-[400px] bg-gray-200 animate-pulse"></div>
 }
-
-@defer (on idle; hydrate on viewport) {
+@defer (on idle; hydrate on idle) {
   <app-categories-slider></app-categories-slider>
-} @placeholder {
-  <div class="w-full h-[200px] bg-gray-200 animate-pulse"></div>
 }
 <app-home-products> </app-home-products>
